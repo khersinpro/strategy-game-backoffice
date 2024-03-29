@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Header from "@/components/header";
+import AuthHeader from "@/components/layouts/AuthHeader";
+import Header from "@/components/layouts/Header";
 import "./globals.css";
 import { ThemeProvider } from "@/src/theme/ThemeProvider";
+import { AuthProvider } from "@/src/auth/AuthContext";
+import { ProtectedRoute } from '@/src/auth/ProtectedRoute';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,16 +18,20 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={inter.className}>
+        <AuthProvider>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <Header>
-            {children}
-          </Header>
+            {/* <ProtectedRoute> */}
+              <AuthHeader>
+                {children}
+              </AuthHeader>
+            {/* </ProtectedRoute> */}
         </ThemeProvider>
+          </AuthProvider>
       </body>
     </html>
   );
