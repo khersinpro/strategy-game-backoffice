@@ -1,19 +1,17 @@
 'use client'
 import { useAuth } from '@/src/auth/AuthContext'
+import { ProtectedRoute } from '@/src/auth/ProtectedRoute'
 
-export default function LoginForm() {
-  const { user, isAuthenticated, isLoading } = useAuth()
+function LoginForm() {
+  const { user } = useAuth()
 
-  if (isLoading) {
-    return <p>Loading...</p>
-  }
-  
-  console.log(user, isAuthenticated)
   return (
-    <>
-      <h1>DASHBOARD</h1>
-      <p>Welcome, {user.username}</p>
-      <p>Email, {user.email}</p>
-    </>
+      <>
+        <h1>DASHBOARD</h1>
+        <p>Welcome, {user.username}</p>
+        <p>Email, {user.email}</p>
+      </>
   )
 }
+
+export default ProtectedRoute(LoginForm)

@@ -16,7 +16,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log('AuthContext.tsx: useEffect');
     const token = localStorage.getItem('token');
     if (token) {
       axios.get('http://localhost:3000/api/user/me', {
