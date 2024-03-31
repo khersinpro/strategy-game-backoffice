@@ -1,14 +1,14 @@
-import { auth } from "@/src/auth/auth.config"
+import { auth } from "@/src/auth/auth"
 import axios from "axios"
 
 async function Dashboard() {
-  const { user } = await auth()
+  const session = await auth()
 
 
   return (
     <>
       <h1>DASHBOARD</h1>
-      <p>{JSON.stringify( user )}</p>
+      <p>{JSON.stringify( session )}</p>
       {/* <p>Welcome, {user.username}</p>
       <p>Email, {user.email}</p> */}
       <ul>

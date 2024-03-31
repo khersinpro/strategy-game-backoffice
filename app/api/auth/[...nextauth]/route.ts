@@ -1,3 +1,1 @@
-import handler from '@/src/auth/auth'
-
-export { handler as GET, handler as POST }
+export { GET, POST } from "@/src/auth/auth"

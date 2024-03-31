@@ -1,3 +1,5 @@
+import { AdapterUser } from "next-auth/adapters";
+
 export interface IAuthContext {
     user: any;
     isAuthenticated: boolean;
@@ -20,3 +22,4 @@ export interface User {
     email: string;
     token: string;
 }
+

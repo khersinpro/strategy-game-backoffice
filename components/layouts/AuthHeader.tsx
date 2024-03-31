@@ -30,7 +30,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import ThemeButton from "@/src/theme/ThemeButton"
-import { auth } from "@/src/auth/serversession"
+import { auth } from "@/src/auth/auth"
 
 
 export default async function AuthHeader({ children }: { children: React.ReactNode }) {
