@@ -30,10 +30,11 @@ import {
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import ThemeButton from "@/src/theme/ThemeButton"
-import Header from "./Header"
-import { useAuth } from '@/src/auth/AuthContext'
+import { auth } from "@/src/auth/serversession"
 
-export default function AuthHeader({ children }: { children: React.ReactNode }) {
+
+export default async function AuthHeader({ children }: { children: React.ReactNode }) {
+    const session = await auth()
 
     const navListItems = [
     {
@@ -44,13 +45,13 @@ export default function AuthHeader({ children }: { children: React.ReactNode }) 
     {
       icon: Users,
       title: "Utilisateurs",
-      href: "/test",
+      href: "/dashboard/user",
       badge: 6
     },
     {
       icon: GlobeLock,
       title: "Servers",
-      href: "/auth",  
+      href: "/dashboard/servers",  
     },
     {
       icon: PersonStanding,
@@ -78,8 +79,6 @@ export default function AuthHeader({ children }: { children: React.ReactNode }) 
       href: "#",
     },
   ]
-
-  const { user } = useAuth()
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
