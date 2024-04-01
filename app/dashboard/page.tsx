@@ -1,23 +1,37 @@
+import BreadCrumb from "@/components/breadcrumb"
 import { auth } from "@/src/auth/auth"
 import axios from "axios"
 
 async function Dashboard() {
   const session = await auth()
-  const users = await axios.get("http://localhost:3000/api/user", {
+  const user = session?.user
+
+  type User = {
+    id: number,
+    email: string
+  }
+  
+  type UserList = User[]
+
+  const response = await axios.get("http://localhost:3000/api/user", {
     headers: {
-      Authorization: `Bearer ${session?.user.token}`
+      Authorization: `Bearer ${user?.token}`
     }
   })
 
+  const users: UserList = response.data
+
   return (
     <>
+    <BreadCrumb/>
       <h1>DASHBOARD</h1>
-      <p>{JSON.stringify( session?.user )}</p>
-      <p>test</p>
-      {/* <p>Welcome, {user.username}</p>
-      <p>Email, {user.email}</p> */}
+      <p>Welcome, {user?.username}</p>
+      <p>Email, {user?.email}</p>
+      <p>Role, {user?.role_name}</p>
+      <p style={{wordBreak: 'break-word'}}>Token, {user?.token}</p>
+
       <ul>
-        {users.data.map((user) => (
+        {users.map((user) => (
           <li key={user.id}>{user.email}</li>
         ))}
       </ul>

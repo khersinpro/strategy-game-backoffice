@@ -50,7 +50,8 @@ export const {
     callbacks: {
         async session({ session, token }) {
             if (session && session.user) {
-             session.user = token.user as AdapterUser & User & { role: string;
+             session.user = token.user as AdapterUser & User & { 
+                role_name: string;
                 username: string;
                 email: string;
                 token: string;} ;

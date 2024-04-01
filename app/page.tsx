@@ -1,7 +1,7 @@
 'use client'
 import { z } from "zod"
-import React, { useState, useCallback, useEffect } from "react"
-import { loginFormErrors } from "@/src/types/LoginForm"
+import React, { useState, useCallback } from "react"
+import { loginFormErrors } from "@/src/types/login-form"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -14,13 +14,9 @@ import {
 import Link from "next/link"
 import Image from "next/image"
 import { TriangleAlert } from "lucide-react"
-import Header from "@/components/layouts/Header"
+import PublicHeader from "@/components/layouts/public-header"
 import { signIn } from "next-auth/react"
-
-const LoginFormSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(4, 'Password must be at least 8 characters'),
-})
+import { LoginFormSchema } from "@/src/schemas/login"
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>('')
@@ -77,7 +73,7 @@ export default function LoginForm() {
   }, [email, password, handleZodError, router])
 
   return (
-    <Header>
+    <PublicHeader>
       <div className="w-full flex flex-1 lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
         <div className="flex flex-1 items-center justify-center py-12">
           <form onSubmit={handleLogin} className="mx-auto grid w-[350px] gap-6">
@@ -144,6 +140,6 @@ export default function LoginForm() {
           />
         </div>
       </div>
-    </Header>
+    </PublicHeader>
   )
 }

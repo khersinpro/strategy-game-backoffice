@@ -27,8 +27,6 @@ export default auth((req) => {
       nextUrl
     ));
   }
-
-
 })
 
 export const config = {

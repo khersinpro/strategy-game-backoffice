@@ -15,7 +15,8 @@ import {
   Sword,
   Castle,
   GlobeLock,
-  PersonStanding
+  PersonStanding,
+  Shield
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -29,8 +30,10 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import ThemeButton from "@/src/theme/ThemeButton"
+import ThemeButton from "@/src/theme/theme-button"
 import { auth } from "@/src/auth/auth"
+import { LogoutButton } from "../auth/logout-button"
+
 
 
 export default async function AuthHeader({ children }: { children: React.ReactNode }) {
@@ -40,7 +43,7 @@ export default async function AuthHeader({ children }: { children: React.ReactNo
     {
       icon: Home,
       title: "Dashboard",
-      href: "/",
+      href: "/dashboard",
     },
     {
       icon: Users,
@@ -51,32 +54,37 @@ export default async function AuthHeader({ children }: { children: React.ReactNo
     {
       icon: GlobeLock,
       title: "Servers",
-      href: "/dashboard/servers",  
+      href: "/dashboard/server",  
     },
     {
       icon: PersonStanding,
       title: "Civilisations",
-      href: "#",
+      href: "/dashboard/civilization",
     },
     {
       icon: Castle,
       title: "Batiments",
-      href: "#",
+      href: "/dashboard/building",
+    },
+    {
+      icon: Shield,
+      title: "Type d'unités",
+      href: "/dashboard/unit-type",
     },
     {
       icon: Sword,
       title: "Unités",
-      href: "#",
+      href: "/dashboard/unit",
     },
     {
       icon: Earth,
       title: "Cartes",
-      href: "#",
+      href: "/dashboard/map",
     },
     {
       icon: LineChart,
       title: "Ressources",
-      href: "#",
+      href: "/dashboard/resource",
     },
   ]
 
@@ -203,7 +211,9 @@ export default async function AuthHeader({ children }: { children: React.ReactNo
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <LogoutButton>
+                <DropdownMenuItem>Logout</DropdownMenuItem>
+              </LogoutButton>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>

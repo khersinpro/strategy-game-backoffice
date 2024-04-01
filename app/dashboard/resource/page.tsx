@@ -1,4 +1,4 @@
-import BreadCrumb from "@/components/breadcrumb"
+import { Card } from "@/components/ui/card"
 import { auth } from "@/src/auth/auth"
 
 export default async function Dashboard() {
@@ -8,8 +8,7 @@ export default async function Dashboard() {
 
   return (
     <>
-      <BreadCrumb/>
-      <h1>{'DASHBOARD > USER'}</h1>
+      <h1>{'DASHBOARD > Resource'}</h1>
       <p>Welcome, {user?.username}</p>
       <p>Email, {user?.email}</p>
       <p>Role, {user?.role_name}</p>

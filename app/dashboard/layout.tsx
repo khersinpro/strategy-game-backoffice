@@ -1,4 +1,4 @@
-import AuthHeader from "@/components/layouts/AuthHeader";
+import AuthHeader from "@/components/layouts/auth-header";
 import { PropsWithChildren } from "react";
 
 export default function AuthLayout({ children }: PropsWithChildren<{}>) {
