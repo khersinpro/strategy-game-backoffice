@@ -1,4 +1,3 @@
-import BreadCrumb from "@/components/breadcrumb"
 import { auth } from "@/src/auth/auth"
 import axios from "axios"
 
@@ -23,12 +22,28 @@ async function Dashboard() {
 
   return (
     <>
-    <BreadCrumb/>
-      <h1>DASHBOARD</h1>
       <p>Welcome, {user?.username}</p>
       <p>Email, {user?.email}</p>
       <p>Role, {user?.role_name}</p>
       <p style={{wordBreak: 'break-word'}}>Token, {user?.token}</p>
+
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>{user.email}</li>
+        ))}
+      </ul>
+
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>{user.email}</li>
+        ))}
+      </ul>
+
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>{user.email}</li>
+        ))}
+      </ul>
 
       <ul>
         {users.map((user) => (
