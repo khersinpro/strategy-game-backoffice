@@ -5,7 +5,7 @@ export default async function Dashboard() {
   const session = await auth()
   const user = session?.user
 
-
+  await new Promise((resolve) => setTimeout(resolve, 2000))
   return (
     <>
       <h1>{'DASHBOARD > Building'}</h1>

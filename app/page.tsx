@@ -17,11 +17,13 @@ import { TriangleAlert } from "lucide-react"
 import PublicHeader from "@/components/layouts/public-header"
 import { signIn } from "next-auth/react"
 import { LoginFormSchema } from "@/src/schemas/login"
+import { ReloadIcon } from "@radix-ui/react-icons"
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [errors, setErrors] = useState<loginFormErrors>({})
+  const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
 
   /**
@@ -46,13 +48,16 @@ export default function LoginForm() {
   const handleLogin = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
     try {
       event.preventDefault()
+      setLoading(true)
       LoginFormSchema.parse({ email, password });
-
+      
       const result = await signIn('credentials', {
         redirect: false,
         email,
         password,
       });
+
+      setLoading(false)
 
       if (result && result.error) {
         setErrors({
@@ -124,9 +129,18 @@ export default function LoginForm() {
                   </AlertDescription>
                 </Alert>
               }
-              <Button type="submit" className="w-full">
-                Login
-              </Button>
+              {
+                loading ? (
+                  <Button disabled>
+                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                    Please wait
+                  </Button>
+                ) : (
+                  <Button type="submit" className="w-full">
+                    Login
+                  </Button>
+                )
+              }
             </div>
           </form>
         </div>

@@ -2,6 +2,7 @@
 import { usePathname } from "next/navigation";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "./ui/breadcrumb";
 import Link from "next/link";
+import { Fragment } from "react";
 
 
 const BreadCrumb = () => {
@@ -21,23 +22,24 @@ const BreadCrumb = () => {
                     const title = formatString(path);
                     const isLast = index === pathsArray.length - 1;
                     return (
-                        <BreadcrumbItem key={index}>
-                            {isLast ? 
-                                <BreadcrumbPage>
-                                    {title}
-                                </BreadcrumbPage>
-                                :
-                                <>
-                                    <BreadcrumbLink>
-                                        <Link href={href}>
-                                            {title}
-                                        </Link>
-                                    </BreadcrumbLink>
-                                    <BreadcrumbSeparator />
-                                </>
-                            }
-               
-                        </BreadcrumbItem> 
+                        <Fragment key={index}>
+                            <BreadcrumbItem>
+                                {isLast ? 
+                                    <BreadcrumbPage>
+                                        {title}
+                                    </BreadcrumbPage>
+                                    :
+                                    <>
+                                        <BreadcrumbLink asChild>
+                                            <Link href={href}>
+                                                {title}
+                                            </Link>
+                                        </BreadcrumbLink>
+                                    </>
+                                }
+                            </BreadcrumbItem> 
+                            {!isLast && <BreadcrumbSeparator />}
+                        </Fragment>
                     );
                 })}
 
