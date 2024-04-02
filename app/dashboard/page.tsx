@@ -5,7 +5,6 @@ async function Dashboard() {
   const session = await auth()
   const user = session?.user
 
-  await new Promise((resolve) => setTimeout(resolve, 2000))
   type User = {
     id: number,
     email: string
@@ -13,7 +12,7 @@ async function Dashboard() {
   
   type UserList = User[]
 
-  const response = await axios.get("http://localhost:3000/api/user", {
+  const response = await axios.get(`${process.env.API_URL}/user`, {
     headers: {
       Authorization: `Bearer ${user?.token}`
     }

@@ -3,8 +3,6 @@ import Credentials from "next-auth/providers/credentials";
 import axios from "axios";
 import { AdapterUser } from "next-auth/adapters";
 
-
-
 export const {
     handlers: { GET, POST },
     auth,
@@ -18,13 +16,13 @@ export const {
             },
             async authorize(credentials) {
                 try {
-                    const response = await axios.post("http://localhost:3000/api/login", { 
+                    const response = await axios.post(`${process.env.API_URL}/login`, { 
                         email: credentials.email, 
                         password: credentials.password
                     })
                     const token: string = response.data.token
     
-                    const userResponse = await axios.get("http://localhost:3000/api/user/me", {
+                    const userResponse = await axios.get(`${process.env.API_URL}/user/me`, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
