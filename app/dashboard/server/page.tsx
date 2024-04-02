@@ -1,10 +1,8 @@
-import { Card } from "@/components/ui/card"
 import { auth } from "@/src/auth/auth"
 
 export default async function Dashboard() {
   const session = await auth()
   const user = session?.user
-
 
   return (
     <>
