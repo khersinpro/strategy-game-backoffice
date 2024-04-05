@@ -12,14 +12,14 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react"
-import { Civilization } from "@/src/types/civilization"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
+import { Resource } from "@/src/types/resource"
 
-export const columns: ColumnDef<Civilization>[] = [
+export const columns: ColumnDef<Resource>[] = [
     {
         accessorKey: "name",
         header: ({ column }) => {
-            return <DataTableColumnHeader className="pl-3" column={column} title="Nom de la civilisation" />
+            return <DataTableColumnHeader className="pl-3" column={column} title="Nom de la resource" />
         },
         cell: ({ row }) => <div className="pl-3">{row.getValue("name")}</div>,
     },

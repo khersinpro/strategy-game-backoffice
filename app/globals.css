@@ -60,3 +60,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+.mainAuth {
+  width: 100vw;
+}
+@screen md {
+  .mainAuth {
+      width: calc(100vw - 240px);
+  }
+}
+@screen lg {
+  .mainAuth {
+      width: calc(100vw - 300px);
+  }
+}

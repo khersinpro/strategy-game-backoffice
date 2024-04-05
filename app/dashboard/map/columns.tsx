@@ -12,16 +12,34 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react"
-import { Civilization } from "@/src/types/civilization"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
+import { Map } from "@/src/types/map"
 
-export const columns: ColumnDef<Civilization>[] = [
+export const columns: ColumnDef<Map>[] = [
     {
-        accessorKey: "name",
+        accessorKey: "id",
         header: ({ column }) => {
-            return <DataTableColumnHeader className="pl-3" column={column} title="Nom de la civilisation" />
+            return <DataTableColumnHeader className="pl-3" column={column} title="Identifiant" />
         },
-        cell: ({ row }) => <div className="pl-3">{row.getValue("name")}</div>,
+        cell: ({ row }) => <div className="pl-3">{row.getValue("id")}</div>,
+    },
+    {
+        accessorKey: "server_name",
+        header: ({ column }) => {
+            return <DataTableColumnHeader column={column} title="Nom du serveur" />
+        },
+    },
+    {
+        accessorKey: "x_area",
+        header: ({ column }) => {
+            return <DataTableColumnHeader column={column} title="Largeur en case" />
+        },
+    },
+    {
+        accessorKey: "y_area",
+        header: ({ column }) => {
+            return <DataTableColumnHeader column={column} title="Hauteur en case" />
+        },
     },
     {
         accessorKey: "createdAt",
@@ -49,7 +67,7 @@ export const columns: ColumnDef<Civilization>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
-            const civilization = row.original
+            const map = row.original
 
             return (
                 <DropdownMenu>
@@ -62,9 +80,9 @@ export const columns: ColumnDef<Civilization>[] = [
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(civilization.name)}
+                            onClick={() => navigator.clipboard.writeText(map.id.toString())}
                         >
-                            Copier le nom
+                            Copier l'id
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Éditer</DropdownMenuItem>

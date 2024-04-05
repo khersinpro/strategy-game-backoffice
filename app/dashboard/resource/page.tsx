@@ -1,18 +1,22 @@
-import { Card } from "@/components/ui/card"
+import { DataTable } from "@/components/data-table/data-table"
 import { auth } from "@/src/auth/auth"
+import { ResourceList } from "@/src/types/resource"
+import axios from "axios"
+import { columns } from "./columns"
 
 export default async function Dashboard() {
   const session = await auth()
   const user = session?.user
+  const resources: ResourceList = await axios.get(`${process.env.API_URL}/resource`, {
+    headers: {
+      Authorization: `Bearer ${user?.token}`
+    }
+  }).then(res => res.data)
 
 
   return (
     <>
-      <h1>{'DASHBOARD > Resource'}</h1>
-      <p>Welcome, {user?.username}</p>
-      <p>Email, {user?.email}</p>
-      <p>Role, {user?.role_name}</p>
-      <p style={{wordBreak: 'break-word'}}>Token, {user?.token}</p>
+      <DataTable columns={columns} data={resources} filteredField={{accessorKey: 'name', label: 'nom'}} />
     </>
   )
 }

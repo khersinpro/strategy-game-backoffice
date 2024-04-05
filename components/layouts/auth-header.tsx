@@ -1,3 +1,5 @@
+'use client'
+
 import Link from "next/link"
 import {
   Bell,
@@ -5,10 +7,8 @@ import {
   Home,
   LineChart,
   Menu,
-  Package,
   Package2,
   Search,
-  ShoppingCart,
   Users,
   Swords,
   Earth,
@@ -31,12 +31,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import ThemeButton from "@/src/theme/theme-button"
-import { auth } from "@/src/auth/auth"
 import { LogoutButton } from "../auth/logout-button"
+import { usePathname } from "next/navigation"
 
-export default async function AuthHeader({ children }: { children: React.ReactNode }) {
-    const session = await auth()
 
+export default function AuthHeader({ children }: { children: React.ReactNode }) {
+    const pathname = usePathname()
     const navListItems = [
     {
       icon: Home,
@@ -112,7 +112,7 @@ export default async function AuthHeader({ children }: { children: React.ReactNo
                   <Link
                     key={index}
                     href={item.href}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${index === 0 ? 'bg-muted' : ''}`}
+                    className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${pathname === item.href ? 'bg-muted' : 'text-muted-foreground'}`}
                   >
                     <item.icon className="h-4 w-4" />
                     {item.title}
@@ -163,7 +163,7 @@ export default async function AuthHeader({ children }: { children: React.ReactNo
                     <Link
                       key={index}
                       href={item.href}
-                      className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 hover:text-foreground ${index === 0 ? 'bg-muted text-foreground' : 'text-muted-foreground'}`}
+                      className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 hover:text-foreground  ${pathname === item.href ? 'bg-muted' : 'text-muted-foreground'}`}
                     >
                       <item.icon className="h-5 w-5" />
                       {item.title}
@@ -218,7 +218,7 @@ export default async function AuthHeader({ children }: { children: React.ReactNo
         </div>
 
         {/* Main */}
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 mainAuth">
           {children}
         </main>
       </div>
