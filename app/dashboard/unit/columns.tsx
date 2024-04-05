@@ -13,16 +13,70 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
-import { UnitType } from "@/src/types/unit-type"
+import { Unit } from "@/src/types/unit"
 
-export const columns: ColumnDef<UnitType>[] = [
+export const columns: ColumnDef<Unit>[] = [
     {
-        accessorKey: "type",
+        accessorKey: "name",
         header: ({ column }) => {
-            return <DataTableColumnHeader className="pl-3"column={column} title="Type" />
+            return <DataTableColumnHeader className="pl-3" column={column} title="Nom de l'unité" />
         },
-        cell: ({ row }) => <div className="pl-3">{row.getValue("type")}</div>,
+        cell: ({ row }) => <div className="pl-3">{row.getValue("name")}</div>,
     },
+    {
+        accessorKey: "attack",
+        header: ({ column }) => {
+            return <DataTableColumnHeader column={column} title="Attaque de l'unité" />
+        },
+    },
+    {
+        accessorKey: 'carrying_capacity',
+        header: ({ column }) => {
+            return <DataTableColumnHeader column={column} title='Capacité de transport' />
+        },
+    },  
+    {
+        accessorKey: 'movement_speed',
+        header: ({ column }) => {
+            return <DataTableColumnHeader column={column} title='Vitesse de déplacement' />
+        },
+    },  
+    {
+        accessorKey: 'population_cost',
+        header: ({ column }) => {
+            return <DataTableColumnHeader column={column} title='Coût en population' />
+        },
+    },  
+    {
+        accessorKey: 'military_building',
+        header: ({ column }) => {
+            return <DataTableColumnHeader column={column} title="Bâtiment d'entraînement" />
+        },
+    },  
+    {
+        accessorKey: 'training_time',
+        header: ({ column }) => {
+            return <DataTableColumnHeader column={column} title="Durée d'entraînement" />
+        },
+        cell: ({ row }) => {
+            const trainingTime: number = row.getValue('training_time')
+            const minutes = Math.floor(trainingTime / 60)
+            const seconds = trainingTime % 60
+            return <div>{`${minutes}m ${seconds}s`}</div>
+        }
+    },  
+    {
+        accessorKey: 'unit_type',
+        header: ({ column }) => {
+            return <DataTableColumnHeader column={column} title="Type d'unité" />
+        },
+    },  
+    {
+        accessorKey: 'civilization_name',
+        header: ({ column }) => {
+            return <DataTableColumnHeader column={column} title="Civilisation associée" />
+        },
+    },  
     {
         accessorKey: "createdAt",
         header: ({ column }) => {
@@ -49,7 +103,7 @@ export const columns: ColumnDef<UnitType>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
-            const unitType = row.original
+            const building = row.original
 
             return (
                 <DropdownMenu>
@@ -62,13 +116,12 @@ export const columns: ColumnDef<UnitType>[] = [
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(unitType.type)}
+                            onClick={() => navigator.clipboard.writeText(building.name)}
                         >
-                            Copier le type
+                            Copier le nom
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Éditer</DropdownMenuItem>
-                        <DropdownMenuItem>Supprimer</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

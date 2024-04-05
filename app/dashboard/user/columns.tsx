@@ -11,7 +11,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { MoreHorizontal } from "lucide-react"
 import { User } from "@/src/types/user"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 
@@ -19,8 +19,9 @@ export const columns: ColumnDef<User>[] = [
     {
         accessorKey: "id",
         header: ({ column }) => {
-            return <DataTableColumnHeader column={column} title="ID" />
+            return <DataTableColumnHeader className="pl-3" column={column} title="ID" />
         },
+        cell: ({ row }) => <div className="pl-3">{row.getValue("id")}</div>,
     },
     {
         accessorKey: "username",
@@ -85,7 +86,7 @@ export const columns: ColumnDef<User>[] = [
                             Copier l'email
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Modifier l'utilisateur</DropdownMenuItem>
+                        <DropdownMenuItem>Éditer</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

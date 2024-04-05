@@ -12,16 +12,16 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react"
+import { Civilization } from "@/src/types/civilization"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
-import { UnitType } from "@/src/types/unit-type"
 
-export const columns: ColumnDef<UnitType>[] = [
+export const columns: ColumnDef<Civilization>[] = [
     {
-        accessorKey: "type",
+        accessorKey: "name",
         header: ({ column }) => {
-            return <DataTableColumnHeader className="pl-3"column={column} title="Type" />
+            return <DataTableColumnHeader className="pl-3" column={column} title="Nom de la civilisation" />
         },
-        cell: ({ row }) => <div className="pl-3">{row.getValue("type")}</div>,
+        cell: ({ row }) => <div className="pl-3">{row.getValue("name")}</div>,
     },
     {
         accessorKey: "createdAt",
@@ -49,7 +49,7 @@ export const columns: ColumnDef<UnitType>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
-            const unitType = row.original
+            const civilization = row.original
 
             return (
                 <DropdownMenu>
@@ -58,17 +58,16 @@ export const columns: ColumnDef<UnitType>[] = [
                             <span className="sr-only">Open menu</span>
                             <MoreHorizontal className="h-4 w-4" />
                         </Button>
-                    </DropdownMenuTrigger>
+                    </DropdownMenuTrigger>app/dashboard/civilization/columns.tsx
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(unitType.type)}
+                            onClick={() => navigator.clipboard.writeText(civilization.name)}
                         >
-                            Copier le type
+                            Copier le nom
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Éditer</DropdownMenuItem>
-                        <DropdownMenuItem>Supprimer</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

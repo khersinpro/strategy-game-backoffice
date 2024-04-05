@@ -1,18 +1,21 @@
-import { Card } from "@/components/ui/card"
+import { DataTable } from "@/components/data-table/data-table"
 import { auth } from "@/src/auth/auth"
+import { BuildingList } from "@/src/types/building"
+import axios from "axios"
+import { columns } from "./columns"
 
 export default async function Dashboard() {
   const session = await auth()
   const user = session?.user
+  const buildings: BuildingList = await axios.get(`${process.env.API_URL}/building`, {
+    headers: {
+      Authorization: `Bearer ${user?.token}`
+    }
+  }).then(res => res.data)
 
-  await new Promise((resolve) => setTimeout(resolve, 2000))
   return (
     <>
-      <h1>{'DASHBOARD > Building'}</h1>
-      <p>Welcome, {user?.username}</p>
-      <p>Email, {user?.email}</p>
-      <p>Role, {user?.role_name}</p>
-      <p style={{wordBreak: 'break-word'}}>Token, {user?.token}</p>
+      <DataTable columns={columns} data={buildings} filteredField={{accessorKey: 'name', label: 'nom'}} />
     </>
   )
 }

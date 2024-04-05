@@ -12,16 +12,16 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react"
+import { Server } from "@/src/types/server"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
-import { UnitType } from "@/src/types/unit-type"
 
-export const columns: ColumnDef<UnitType>[] = [
+export const columns: ColumnDef<Server>[] = [
     {
-        accessorKey: "type",
+        accessorKey: "name",
         header: ({ column }) => {
-            return <DataTableColumnHeader className="pl-3"column={column} title="Type" />
+            return <DataTableColumnHeader className="pl-3" column={column} title="Nom du serveur" />
         },
-        cell: ({ row }) => <div className="pl-3">{row.getValue("type")}</div>,
+        cell: ({ row }) => <div className="pl-3">{row.getValue("name")}</div>,
     },
     {
         accessorKey: "createdAt",
@@ -49,7 +49,7 @@ export const columns: ColumnDef<UnitType>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
-            const unitType = row.original
+            const server = row.original
 
             return (
                 <DropdownMenu>
@@ -62,13 +62,12 @@ export const columns: ColumnDef<UnitType>[] = [
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(unitType.type)}
+                            onClick={() => navigator.clipboard.writeText(server.name)}
                         >
-                            Copier le type
+                            Copier le nom
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Éditer</DropdownMenuItem>
-                        <DropdownMenuItem>Supprimer</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

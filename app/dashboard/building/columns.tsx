@@ -13,16 +13,35 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
-import { UnitType } from "@/src/types/unit-type"
+import { Building } from "@/src/types/building"
 
-export const columns: ColumnDef<UnitType>[] = [
+export const columns: ColumnDef<Building>[] = [
+    {
+        accessorKey: "name",
+        header: ({ column }) => {
+            return <DataTableColumnHeader className="pl-3" column={column} title="Nom du batiment" />
+        },
+        cell: ({ row }) => <div className="pl-3">{row.getValue("name")}</div>,
+    },
     {
         accessorKey: "type",
         header: ({ column }) => {
-            return <DataTableColumnHeader className="pl-3"column={column} title="Type" />
+            return <DataTableColumnHeader column={column} title='Type de batiment' />
         },
-        cell: ({ row }) => <div className="pl-3">{row.getValue("type")}</div>,
+        cell: ({ row }) => <div>{row.getValue("type")}</div>,
     },
+    {
+        accessorKey: 'is_common',
+        header: ({ column }) => {
+            return <DataTableColumnHeader column={column} title='Commun' />
+        },
+        cell: ({ row }) => {
+            const isCommon = row.getValue('is_common')
+            return (
+                <div>{isCommon ? 'Oui' : 'Non'}</div>
+            )
+        },
+    },  
     {
         accessorKey: "createdAt",
         header: ({ column }) => {
@@ -49,7 +68,7 @@ export const columns: ColumnDef<UnitType>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
-            const unitType = row.original
+            const building = row.original
 
             return (
                 <DropdownMenu>
@@ -62,13 +81,12 @@ export const columns: ColumnDef<UnitType>[] = [
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(unitType.type)}
+                            onClick={() => navigator.clipboard.writeText(building.name)}
                         >
-                            Copier le type
+                            Copier le nom
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Éditer</DropdownMenuItem>
-                        <DropdownMenuItem>Supprimer</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

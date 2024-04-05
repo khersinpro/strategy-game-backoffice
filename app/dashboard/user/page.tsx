@@ -51,7 +51,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <DataTable columns={columns} data={userList} />
+      <DataTable columns={columns} data={userList} filteredField={{accessorKey: 'email', label: 'email'}} />
     </>
   )
 }

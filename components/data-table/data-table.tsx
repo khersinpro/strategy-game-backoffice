@@ -29,16 +29,19 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { CheckIcon } from "lucide-react"
 import { MixerHorizontalIcon } from "@radix-ui/react-icons"
 import { DataTablePagination } from "./data-table-pagination"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    filteredField?: {
+        accessorKey: string
+        label: string
+    }
 }
 
-export function DataTable<TData, TValue>({ columns, data, }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, filteredField }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -70,14 +73,18 @@ export function DataTable<TData, TValue>({ columns, data, }: DataTableProps<TDat
 
                 {/* Filtering data */}
                 <div className="flex items-center py-4">
-                    <Input
-                        placeholder="Filter emails..."
-                        value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            table.getColumn("email")?.setFilterValue(event.target.value)
-                        }
-                        className="max-w-sm"
-                    />
+                    {
+                        filteredField && filteredField.accessorKey && filteredField.label && (
+                            <Input
+                                placeholder={`Filtrer par ${filteredField.label}`}
+                                value={(table.getColumn(filteredField.accessorKey)?.getFilterValue() as string) ?? ""}
+                                onChange={(event) =>
+                                    table.getColumn(filteredField.accessorKey)?.setFilterValue(event.target.value)
+                                }
+                                className="max-w-sm"
+                            />
+                        )
+                    }
                 </div>
                 {/* Column visibility dropdown */}
                 <DropdownMenu>
