@@ -11,7 +11,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal } from "lucide-react"
+import { FilePenLine, MoreHorizontal, Trash, View } from "lucide-react"
 import { User } from "@/src/types/user"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 
@@ -80,13 +80,21 @@ export const columns: ColumnDef<User>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(user.email)}
-                        >
-                            Copier l'email
+                        <DropdownMenuItem>
+                            <View className="h-4 w-4 mr-2" />
+                            Apperçu
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Éditer</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                            <FilePenLine className="h-4 w-4 mr-2" />
+                            Éditer
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                            <Trash className="h-4 w-4 mr-2" />
+                            Supprimer
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

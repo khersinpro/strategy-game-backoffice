@@ -3,6 +3,8 @@ import { auth } from "@/src/auth/auth"
 import { ResourceList } from "@/src/types/resource"
 import axios from "axios"
 import { columns } from "./columns"
+import { Button } from "@/components/ui/button"
+import { CirclePlus } from "lucide-react"
 
 export default async function Dashboard() {
   const session = await auth()
@@ -16,7 +18,11 @@ export default async function Dashboard() {
 
   return (
     <>
-      <DataTable columns={columns} data={resources} filteredField={{accessorKey: 'name', label: 'nom'}} />
+      <Button className="w-fit">
+        <CirclePlus className="h-5 w-5 mr-2" />
+        Créer un type de ressource
+      </Button>
+      <DataTable columns={columns} data={resources} filteredField={{ accessorKey: 'name', label: 'nom' }} />
     </>
   )
 }

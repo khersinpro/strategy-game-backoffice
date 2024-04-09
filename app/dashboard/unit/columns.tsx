@@ -11,7 +11,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal } from "lucide-react"
+import { FilePenLine, MoreHorizontal, Trash, View } from "lucide-react"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { Unit } from "@/src/types/unit"
 
@@ -34,25 +34,25 @@ export const columns: ColumnDef<Unit>[] = [
         header: ({ column }) => {
             return <DataTableColumnHeader column={column} title='Capacité de transport' />
         },
-    },  
+    },
     {
         accessorKey: 'movement_speed',
         header: ({ column }) => {
             return <DataTableColumnHeader column={column} title='Vitesse de déplacement' />
         },
-    },  
+    },
     {
         accessorKey: 'population_cost',
         header: ({ column }) => {
             return <DataTableColumnHeader column={column} title='Coût en population' />
         },
-    },  
+    },
     {
         accessorKey: 'military_building',
         header: ({ column }) => {
             return <DataTableColumnHeader column={column} title="Bâtiment d'entraînement" />
         },
-    },  
+    },
     {
         accessorKey: 'training_time',
         header: ({ column }) => {
@@ -64,19 +64,19 @@ export const columns: ColumnDef<Unit>[] = [
             const seconds = trainingTime % 60
             return <div>{`${minutes}m ${seconds}s`}</div>
         }
-    },  
+    },
     {
         accessorKey: 'unit_type',
         header: ({ column }) => {
             return <DataTableColumnHeader column={column} title="Type d'unité" />
         },
-    },  
+    },
     {
         accessorKey: 'civilization_name',
         header: ({ column }) => {
             return <DataTableColumnHeader column={column} title="Civilisation associée" />
         },
-    },  
+    },
     {
         accessorKey: "createdAt",
         header: ({ column }) => {
@@ -115,13 +115,21 @@ export const columns: ColumnDef<Unit>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(building.name)}
-                        >
-                            Copier le nom
+                        <DropdownMenuItem>
+                            <View className="h-4 w-4 mr-2" />
+                            Apperçu
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Éditer</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                            <FilePenLine className="h-4 w-4 mr-2" />
+                            Éditer
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                            <Trash className="h-4 w-4 mr-2" />
+                            Supprimer
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

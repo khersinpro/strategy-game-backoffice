@@ -3,6 +3,8 @@ import { auth } from "@/src/auth/auth"
 import { ServerList } from "@/src/types/server"
 import axios from "axios"
 import { columns } from "./columns"
+import { Button } from "@/components/ui/button"
+import { CirclePlus } from "lucide-react"
 
 export default async function Dashboard() {
   const session = await auth()
@@ -11,12 +13,16 @@ export default async function Dashboard() {
   const servers: ServerList = await axios.get(process.env.API_URL + '/server', {
     headers: {
       Authorization: `Bearer ${user?.token}`
-    } 
+    }
   }).then(res => res.data)
 
   return (
     <>
-      <DataTable columns={columns} data={servers} filteredField={{accessorKey: 'name', label: 'nom' }} />
+      <Button className="w-fit">
+        <CirclePlus className="h-5 w-5 mr-2" />
+        Créer une civilisation
+      </Button>
+      <DataTable columns={columns} data={servers} filteredField={{ accessorKey: 'name', label: 'nom' }} />
     </>
   )
 }

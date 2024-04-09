@@ -3,6 +3,8 @@ import { auth } from "@/src/auth/auth"
 import { columns } from "./columns"
 import { DataTable } from "../../../components/data-table/data-table"
 import { UnitTypeList } from "@/src/types/unit-type"
+import { CirclePlus } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 export default async function Dashboard() {
   const session = await auth()
@@ -16,7 +18,11 @@ export default async function Dashboard() {
 
   return (
     <>
-      <DataTable columns={columns} data={unitTypes} filteredField={{accessorKey: 'type', label: 'type'}} />
+      <Button className="w-fit">
+        <CirclePlus className="h-5 w-5 mr-2" />
+        {"Créer un type d'unité"}
+      </Button>
+      <DataTable columns={columns} data={unitTypes} filteredField={{ accessorKey: 'type', label: 'type' }} />
     </>
   )
 }

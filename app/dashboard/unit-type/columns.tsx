@@ -11,7 +11,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal } from "lucide-react"
+import { FilePenLine, MoreHorizontal, Trash, View } from "lucide-react"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { UnitType } from "@/src/types/unit-type"
 
@@ -19,7 +19,7 @@ export const columns: ColumnDef<UnitType>[] = [
     {
         accessorKey: "type",
         header: ({ column }) => {
-            return <DataTableColumnHeader className="pl-3"column={column} title="Type" />
+            return <DataTableColumnHeader className="pl-3" column={column} title="Type" />
         },
         cell: ({ row }) => <div className="pl-3">{row.getValue("type")}</div>,
     },
@@ -61,14 +61,21 @@ export const columns: ColumnDef<UnitType>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(unitType.type)}
-                        >
-                            Copier le type
+                        <DropdownMenuItem>
+                            <View className="h-4 w-4 mr-2" />
+                            Apperçu
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Éditer</DropdownMenuItem>
-                        <DropdownMenuItem>Supprimer</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                            <FilePenLine className="h-4 w-4 mr-2" />
+                            Éditer
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                            <Trash className="h-4 w-4 mr-2" />
+                            Supprimer
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

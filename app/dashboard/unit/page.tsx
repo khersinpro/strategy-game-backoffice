@@ -3,6 +3,8 @@ import { auth } from "@/src/auth/auth"
 import { UnitList } from "@/src/types/unit"
 import axios from "axios"
 import { columns } from "./columns"
+import { Button } from "@/components/ui/button"
+import { CirclePlus } from "lucide-react"
 
 export default async function Dashboard() {
   const session = await auth()
@@ -15,6 +17,12 @@ export default async function Dashboard() {
   }).then(res => res.data)
 
   return (
-      <DataTable columns={columns} data={units} filteredField={{accessorKey: 'name', label: 'nom'}} />
+    <>
+      <Button className="w-fit">
+        <CirclePlus className="h-5 w-5 mr-2" />
+        Créer une unité
+      </Button>
+      <DataTable columns={columns} data={units} filteredField={{ accessorKey: 'name', label: 'nom' }} />
+    </>
   )
 }
