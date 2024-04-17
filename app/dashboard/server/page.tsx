@@ -4,7 +4,8 @@ import { ServerList } from "@/src/types/server"
 import axios from "axios"
 import { columns } from "./columns"
 import { Button } from "@/components/ui/button"
-import { CirclePlus } from "lucide-react"
+import { CirclePlus, Plus } from "lucide-react"
+import AuthHeader from "@/components/layouts/auth-header";
 
 export default async function Dashboard() {
   const session = await auth()
@@ -18,10 +19,12 @@ export default async function Dashboard() {
 
   return (
     <>
-      <Button className="w-fit">
-        <CirclePlus className="h-5 w-5 mr-2" />
-        Créer une civilisation
-      </Button>
+      <AuthHeader>
+        <Button className="w-fit">
+          Serveur
+          <Plus className="ml-2" />
+        </Button>
+      </AuthHeader>
       <DataTable columns={columns} data={servers} filteredField={{ accessorKey: 'name', label: 'nom' }} />
     </>
   )

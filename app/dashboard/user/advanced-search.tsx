@@ -6,7 +6,7 @@ import { FlaskConical, RotateCcw, UserRoundSearch } from "lucide-react";
 
 export default function AdvancedSearch() {
     return (
-        <Collapsible>
+        <Collapsible className="px-4">
             <CollapsibleTrigger asChild>
                 <Button variant="outline" className="w-fit">
                     <UserRoundSearch className="h-4 w-4 mr-2" />
@@ -14,16 +14,17 @@ export default function AdvancedSearch() {
                 </Button>
             </CollapsibleTrigger>
             <CollapsibleContent className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 mt-3">
-                <Input type="text" placeholder="Nom de bâtiment" />
-                <Input type="text" placeholder="Type de bâtiment" />
+                <Input type="text" placeholder="Identifiant" />
+                <Input type="text" placeholder="Nom d'utilisateur" />
+                <Input type="text" placeholder="Email" />
                 <Select>
                     <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Bâtiment commun" />
+                        <SelectValue placeholder="Role" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
-                            <SelectItem value="1">Oui</SelectItem>
-                            <SelectItem value="0">Non</SelectItem>
+                            <SelectItem value="ROLE_USER">Utilisateur</SelectItem>
+                            <SelectItem value="ROLE_ADMIN">Administrateur</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>

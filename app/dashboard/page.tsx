@@ -3,6 +3,7 @@ import { auth } from "@/src/auth/auth"
 import axios from "axios"
 import { Castle, UserPlus, UserRoundCheck, Users } from "lucide-react"
 import { UserList } from "./unit-type/columns"
+import AuthHeader from "@/components/layouts/auth-header"
 
 async function Dashboard() {
   const session = await auth()
@@ -18,9 +19,8 @@ async function Dashboard() {
 
   return (
     <>
-      <h1 className="text-lg font-bold">Tableau de bord de {user?.username}</h1>
-
-      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+      <AuthHeader />
+      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 px-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">

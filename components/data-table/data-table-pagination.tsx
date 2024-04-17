@@ -20,7 +20,7 @@ interface DataTablePaginationProps<TData> {
 
 export function DataTablePagination<TData>({ table, }: DataTablePaginationProps<TData>) {
   return (
-    <div className="flex items-center justify-end px-2">
+    <div className="flex items-center justify-end px-4 pb-4">
       <div className="flex items-center space-x-6 lg:space-x-8">
 
         {/* Input to select the number en rows to display */}

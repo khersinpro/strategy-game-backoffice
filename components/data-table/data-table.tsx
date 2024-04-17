@@ -69,10 +69,10 @@ export function DataTable<TData, TValue>({ columns, data, filteredField }: DataT
 
     return (
         <>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between px-4">
 
                 {/* Filtering data */}
-                <div className="flex items-center py-4">
+                <div className="flex items-center">
                     {
                         filteredField && filteredField.accessorKey && filteredField.label && (
                             <Input
@@ -118,7 +118,7 @@ export function DataTable<TData, TValue>({ columns, data, filteredField }: DataT
                 </DropdownMenu>
             </div>
             {/* Table */}
-            <div className="rounded-md border">
+            <div className="border-y">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
