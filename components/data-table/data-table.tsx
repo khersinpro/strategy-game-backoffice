@@ -5,7 +5,6 @@ import {
     ColumnDef,
     flexRender,
     getCoreRowModel,
-    getPaginationRowModel,
     useReactTable,
     SortingState,
     getSortedRowModel,
@@ -30,7 +29,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { MixerHorizontalIcon } from "@radix-ui/react-icons"
-import { DataTablePagination } from "./data-table-pagination"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -50,7 +48,6 @@ export function DataTable<TData, TValue>({ columns, data, filteredField }: DataT
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
         // This is where we set the sorting state
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
@@ -91,7 +88,7 @@ export function DataTable<TData, TValue>({ columns, data, filteredField }: DataT
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">
                             <MixerHorizontalIcon className="mr-2 h-4 w-4" />
-                            Séléctionner les colonnes
+                            Sélection
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
@@ -162,9 +159,6 @@ export function DataTable<TData, TValue>({ columns, data, filteredField }: DataT
                     </TableBody>
                 </Table>
             </div>
-
-            {/* Pagination */}
-            <DataTablePagination table={table} />
         </>
     )
 }
