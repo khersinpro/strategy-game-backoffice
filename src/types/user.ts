@@ -8,3 +8,8 @@ export type User = {
 }
 
 export type UserList = User[]
+
+export type UserListResponse = {
+    rows: UserList;
+    count: number; 
+}

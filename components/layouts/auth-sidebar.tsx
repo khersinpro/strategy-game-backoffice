@@ -22,6 +22,8 @@ import { Separator } from "../ui/separator"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { LogoutButton } from "../auth/logout-button"
 import ThemeButton from "@/src/theme/theme-button"
+import Image from "next/image"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 
 export default function AuthSideBar() {
   const pathname = usePathname()
@@ -81,7 +83,12 @@ export default function AuthSideBar() {
         {/* Left top bloc with notifications */}
         <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
           <Link href="/" className="flex items-center gap-2 font-semibold">
-            <Swords className="h-6 w-6" />
+            {/* <Swords className="h-6 w-6" /> */}
+            <Avatar className="h-10 w-10">
+              <AvatarImage src="/logo.jpeg" />
+              <AvatarFallback></AvatarFallback>
+            </Avatar>
+
             <span className="">Strategy Game</span>
           </Link>
           <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
