@@ -13,3 +13,8 @@ export type Unit = {
 }
 
 export type UnitList = Unit[]
+
+export type UnitListResponse = {
+    rows: UnitList;
+    count: number;
+}
