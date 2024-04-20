@@ -3,7 +3,7 @@ import { auth } from "@/src/auth/auth"
 import { columns } from "./columns"
 import { DataTable } from "../../../components/data-table/data-table"
 import { UnitTypeList } from "@/src/types/unit-type"
-import { CirclePlus, Plus } from "lucide-react"
+import { Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import AuthHeader from "@/components/layouts/auth-header"
 

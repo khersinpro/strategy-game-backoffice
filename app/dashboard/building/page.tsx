@@ -1,21 +1,36 @@
 import { DataTable } from "@/components/data-table/data-table"
 import { auth } from "@/src/auth/auth"
-import { BuildingList } from "@/src/types/building"
+import { BuildingListResponse } from "@/src/types/building"
 import axios from "axios"
 import { columns } from "./columns"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
 import AdvancedSearch from "./advanced-search"
 import AuthHeader from "@/components/layouts/auth-header"
+import { SearchParams } from "@/src/types/search-params"
+import CustomPagination from "@/components/pagination/custom-pagination"
 
-export default async function Dashboard() {
+const getAllBuildings = async (token: string, page = 1, limit = 20) : Promise<BuildingListResponse> => {
+  try {
+    return await axios.get(`${process.env.API_URL}/building?page=${page}&limit=${limit}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => res.data)
+  }
+  catch (error) {
+    throw error
+  }
+}
+
+export default async function Dashboard({ searchParams }: { searchParams : SearchParams}) {
   const session = await auth()
   const user = session?.user
-  const buildings: BuildingList = await axios.get(`${process.env.API_URL}/building`, {
-    headers: {
-      Authorization: `Bearer ${user?.token}`
-    }
-  }).then(res => res.data)
+  const limit = searchParams.limit ? parseInt(searchParams.limit as string) : 20
+  const page = searchParams.page ? parseInt(searchParams.page as string) : 1 
+  const token = user?.token || ''
+  const { rows, count } = await getAllBuildings(token, page, limit)
 
   return (
     <>
@@ -26,7 +41,8 @@ export default async function Dashboard() {
         </Button>
       </AuthHeader>
       <AdvancedSearch />
-      <DataTable columns={columns} data={buildings} filteredField={{ accessorKey: 'name', label: 'nom' }} />
+      <DataTable columns={columns} data={rows} filteredField={{ accessorKey: 'name', label: 'nom' }} />
+      <CustomPagination page={page} limit={limit} total={count} />
     </>
   )
 }

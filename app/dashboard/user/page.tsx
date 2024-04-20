@@ -8,7 +8,7 @@ import { auth } from "@/src/auth/auth";
 import CustomPagination from "@/components/pagination/custom-pagination";
 import { SearchParams } from "@/src/types/search-params";
 
-const fetchUserList = async (token: string, page: number = 1, limit: number = 10 ,searchParams: SearchParams) : Promise<UserListResponse> => {
+const fetchUserList = async (token: string, page: number = 1, limit: number = 20 ,searchParams: SearchParams) : Promise<UserListResponse> => {
   try {
     const urlParams = new URLSearchParams(searchParams as any);
     urlParams.set('page', page.toString());
@@ -28,9 +28,9 @@ const fetchUserList = async (token: string, page: number = 1, limit: number = 10
 export default async function Dashboard({ searchParams }: { searchParams: SearchParams }) {
   const session = await auth();
   const token = session?.user ? session.user.token : '';
-  const limit = searchParams.limit ? parseInt(searchParams.limit as string) : 10;
+  const limit = searchParams.limit ? parseInt(searchParams.limit as string) : 20;
   const page = searchParams.page ? parseInt(searchParams.page as string) : 1;
-  const { rows, count }= await fetchUserList(token, page, limit, searchParams);
+  const { rows, count } = await fetchUserList(token, page, limit, searchParams);
   return (
     <>
       <AuthHeader />

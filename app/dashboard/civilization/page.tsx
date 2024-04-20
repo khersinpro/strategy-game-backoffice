@@ -1,11 +1,10 @@
 import { DataTable } from "@/components/data-table/data-table"
-import { Card } from "@/components/ui/card"
 import { auth } from "@/src/auth/auth"
 import { columns } from "./columns"
 import { CivilizationList } from "@/src/types/civilization"
 import axios from "axios"
 import { Button } from "@/components/ui/button"
-import { CirclePlus, Plus } from "lucide-react"
+import { Plus } from "lucide-react"
 import AuthHeader from "@/components/layouts/auth-header"
 
 export default async function Dashboard() {

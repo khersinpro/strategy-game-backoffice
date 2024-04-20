@@ -36,8 +36,7 @@ export default function AuthSideBar() {
     {
       icon: Users,
       title: "Utilisateurs",
-      href: "/dashboard/user",
-      badge: 6
+      href: "/dashboard/user"
     },
     {
       icon: GlobeLock,
@@ -109,11 +108,6 @@ export default function AuthSideBar() {
                 >
                   <item.icon className="h-4 w-4" />
                   {item.title}
-                  {item.badge && (
-                    <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                      {item.badge}
-                    </Badge>
-                  )}
                 </Link>
               ))
             }

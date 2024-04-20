@@ -7,3 +7,8 @@ export type Building = {
 }
 
 export type BuildingList = Building[]
+
+export type BuildingListResponse = {
+    rows: BuildingList;
+    count: number;
+}

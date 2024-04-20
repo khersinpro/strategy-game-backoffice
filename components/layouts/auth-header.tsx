@@ -73,7 +73,7 @@ export default function AuthHeader({ children }: { children?: React.ReactNode })
 
   return (
     <div className="h-14 lg:h-[60px]">
-      <header className="flex justify-between h-14 items-center gap-4 border-b px-4 lg:h-[60px] fixed w-full bg-background z-10">
+      <header className="flex justify-between h-14 items-center gap-4 border-b px-4 lg:h-[60px] fixed w-full md:w-[calc(100%-220px)] lg:w-[calc(100%-300px)] bg-background z-10">
         <div className="flex items-center">
           <Sheet>
             {/* Burger button */}
