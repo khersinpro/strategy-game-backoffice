@@ -11,9 +11,10 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { FilePenLine, MoreHorizontal, Trash, View } from "lucide-react"
+import { MoreHorizontal, View } from "lucide-react"
 import { User } from "@/src/types/user"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
+import Link from "next/link"
 
 export const columns: ColumnDef<User>[] = [
     {
@@ -80,21 +81,13 @@ export const columns: ColumnDef<User>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>
-                            <View className="h-4 w-4 mr-2" />
-                            Apperçu
-                        </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <FilePenLine className="h-4 w-4 mr-2" />
-                            Éditer
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <Trash className="h-4 w-4 mr-2" />
-                            Supprimer
-                        </DropdownMenuItem>
+                        <Link href={`/dashboard/user/${user.id}`}>
+                            <DropdownMenuItem>
+                                <View className="h-4 w-4 mr-2" />
+                                Apperçu
+                            </DropdownMenuItem>
+                        </Link>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

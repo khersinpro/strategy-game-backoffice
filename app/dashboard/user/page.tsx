@@ -1,9 +1,9 @@
 import AuthHeader from "@/components/layouts/auth-header";
 import axios from "axios";
-import { columns } from "./columns";
+import { columns } from "./_components/columns";
 import { DataTable } from "@/components/data-table/data-table";
 import { UserListResponse } from "@/src/types/user";
-import AdvancedSearch from "./advanced-search";
+import AdvancedSearch from "./_components/advanced-search";
 import { auth } from "@/src/auth/auth";
 import CustomPagination from "@/components/pagination/custom-pagination";
 import { SearchParams } from "@/src/types/search-params";
