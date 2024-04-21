@@ -1,10 +1,10 @@
 import AuthHeader from "@/components/layouts/auth-header";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { auth } from "@/src/auth/auth";
 import { User } from "@/src/types/user";
 import axios from "axios";
 import UserProfileCard from "./_components/user-profile-card";
 import UserActivityCard from "./_components/user-activity-card";
+import BackButton from "@/components/back-button";
 
 export async function getUserById(token: string, id: number): Promise<User> {
     try {
@@ -27,7 +27,8 @@ export default async function UserPage({ params }: { params: { id: number } }) {
         <>
             <AuthHeader />
             <div className="px-4">
-                <h1 className="mb-4">Profile</h1>
+                <BackButton className="mb-4"/>
+                <h1 className="mb-4 font-bold text-lg">Profile</h1>
                 <div className="grid grid-cols-2 gap-4">
                     <UserProfileCard user={user} />
                     <UserActivityCard />

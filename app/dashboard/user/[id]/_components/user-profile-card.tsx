@@ -11,11 +11,11 @@ export default function UserProfileCard({ user }: { user: User }) {
         <Card>
             <CardHeader>
                 <CardTitle className="flex items-center">
-                    <Avatar>
+                    <Avatar className="mr-4"> 
                         <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
-                    <h2 className="ml-4">{user.username}</h2>
+                    {user.username}
                 </CardTitle>
             </CardHeader>
             <Separator />
