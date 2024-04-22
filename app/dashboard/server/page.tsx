@@ -2,10 +2,11 @@ import { DataTable } from "@/components/data-table/data-table"
 import { auth } from "@/src/auth/auth"
 import { ServerList } from "@/src/types/server"
 import axios from "axios"
-import { columns } from "./columns"
+import { columns } from "./_components/columns"
 import { Button } from "@/components/ui/button"
-import { CirclePlus, Plus } from "lucide-react"
+import { Plus } from "lucide-react"
 import AuthHeader from "@/components/layouts/auth-header";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 export default async function Dashboard() {
   const session = await auth()
@@ -19,13 +20,19 @@ export default async function Dashboard() {
 
   return (
     <>
-      <AuthHeader>
-        <Button className="w-fit">
-          Serveur
-          <Plus className="ml-2" />
-        </Button>
-      </AuthHeader>
-      <DataTable columns={columns} data={servers} filteredField={{ accessorKey: 'name', label: 'nom' }} />
+      <AuthHeader />
+      <Tabs defaultValue="overview" className="grid">
+          <TabsList className="self-center mx-auto">
+              <TabsTrigger value="overview">Afficher la liste</TabsTrigger>
+              <TabsTrigger value="form">Créer un serveur</TabsTrigger>
+          </TabsList>
+          <TabsContent value="overview" className="grid gap-4">
+            <DataTable columns={columns} data={servers} filteredField={{ accessorKey: 'name', label: 'nom' }} />
+          </TabsContent>
+          <TabsContent value="form">
+            {/* ADD CREATE FORM HERE */}
+          </TabsContent>
+      </Tabs>
     </>
   )
 }

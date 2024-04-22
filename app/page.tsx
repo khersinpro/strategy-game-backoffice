@@ -18,6 +18,7 @@ import PublicHeader from "@/components/layouts/public-header"
 import { signIn } from "next-auth/react"
 import { LoginFormSchema } from "@/src/schemas/login"
 import { ReloadIcon } from "@radix-ui/react-icons"
+import { handleZodError } from "@/src/utils/zod"
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>('')
@@ -25,22 +26,6 @@ export default function LoginForm() {
   const [errors, setErrors] = useState<loginFormErrors>({})
   const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
-
-  /**
-   * handleZodError is a function that handles ZodError
-   * @param error ZodError
-   */
-  const handleZodError = useCallback((error: z.ZodError) => {
-    const errorData: loginFormErrors = {}
-    error.errors.map((err) => {
-      if (err.path[0] === 'email') {
-        errorData.email = err.message
-      } else if (err.path[0] === 'password') {
-        errorData.password = err.message
-      }
-    })
-    setErrors(errorData)
-  }, [])
 
   /**
    * handleLogin is a function that handles the login process
@@ -67,15 +52,16 @@ export default function LoginForm() {
         router.push('/dashboard')
       }
     } catch (error: any) {
+      setLoading(false)
       if (error instanceof z.ZodError) {
-        handleZodError(error)
+        setErrors(handleZodError(error))
       } else {
         setErrors({
           general: error.message
         })
       }
     }
-  }, [email, password, handleZodError, router])
+  }, [email, password, router])
 
   return (
     <PublicHeader>
