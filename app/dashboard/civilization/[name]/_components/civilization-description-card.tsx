@@ -1,19 +1,18 @@
-
 import { RoundedBox } from "@/components/rounded-box";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Server } from "@/src/types/server";
-import { Calendar, CalendarCheck2, Earth, KeyRound } from "lucide-react";
-import ServerEditModal from "./server-edit-modal";
-import { ServerDeleteModal } from "./server-delete-modal";
+import { Civilization } from "@/src/types/civilization";
+import { Calendar, CalendarCheck2, KeyRound, PersonStanding } from "lucide-react";
+import CivilizationEditModal from "./civilization-edit-modal";
+import { CivilizationDeleteModal } from "./civilization-delete-modal";
 
-export default function ServerDescriptionCard({ server } : { server: Server }) {
+export default function CivilizationDescriptionCard({ civilization }: { civilization: Civilization }) {
     return (
         <Card>
             <CardHeader>
                 <CardTitle className="flex items-center">
-                    <Earth className="w-4 h-4 mr-2" />
-                    <span>Descritpion du serveur</span>
+                    <PersonStanding className="w-4 h-4 mr-2" />
+                    <span>Descritpion de la civilization</span>
                 </CardTitle>
             </CardHeader>
             <Separator />
@@ -23,7 +22,7 @@ export default function ServerDescriptionCard({ server } : { server: Server }) {
                         <KeyRound className="h-4 w-4" />
                     </RoundedBox>
                     <p>
-                        <span className="font-semibold">Nom: </span> {server.name}
+                        <span className="font-semibold">Nom: </span> {civilization.name}
                     </p>
                 </div>
                 <div className="flex items-center">
@@ -32,7 +31,7 @@ export default function ServerDescriptionCard({ server } : { server: Server }) {
                     </RoundedBox>
                     <p>
                         <span className="font-semibold">Crée le: </span>
-                        {new Date(server.createdAt).toLocaleDateString()}
+                        {new Date(civilization.createdAt).toLocaleDateString()}
                     </p>
                 </div>
                 <div className="flex items-center">
@@ -41,14 +40,14 @@ export default function ServerDescriptionCard({ server } : { server: Server }) {
                     </RoundedBox>
                     <p>
                         <span className="font-semibold">Mis à jour le: </span>
-                        {new Date(server.updatedAt).toLocaleDateString()}
+                        {new Date(civilization.updatedAt).toLocaleDateString()}
                     </p>
                 </div>
             </CardContent>
             <Separator />
             <CardFooter className="flex justify-between py-4">
-                <ServerEditModal server={server} />
-                <ServerDeleteModal server={server} />
+                <CivilizationEditModal civilization={civilization} />
+                <CivilizationDeleteModal civilization={civilization} />
             </CardFooter>
         </Card>
     )

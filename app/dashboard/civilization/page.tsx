@@ -1,11 +1,11 @@
 import { DataTable } from "@/components/data-table/data-table"
 import { auth } from "@/src/auth/auth"
-import { columns } from "./columns"
+import { columns } from "./_components/columns"
 import { CivilizationList } from "@/src/types/civilization"
 import axios from "axios"
-import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
 import AuthHeader from "@/components/layouts/auth-header"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import CreateCivilizationForm from "./_components/create-civilization-form"
 
 export default async function Dashboard() {
   const session = await auth()
@@ -18,13 +18,21 @@ export default async function Dashboard() {
 
   return (
     <>
-    <AuthHeader>
-      <Button className="w-fit">
-        Civilisation
-        <Plus className="ml-2" />
-      </Button>
-    </AuthHeader>
-      <DataTable columns={columns} data={civilizations} filteredField={{accessorKey: 'name', label: 'nom'}} />
+    <AuthHeader />
+    <Tabs defaultValue="overview" className="grid">
+          <TabsList className="self-center mx-auto">
+              <TabsTrigger value="overview">Afficher la liste</TabsTrigger>
+              <TabsTrigger value="form">Créer une civilisation</TabsTrigger>
+          </TabsList>
+          {/* TABLE DATA */}
+          <TabsContent value="overview" className="grid gap-4">
+            <DataTable columns={columns} data={civilizations} filteredField={{ accessorKey: 'name', label: 'nom' }} />
+          </TabsContent>
+          {/* CREATE FORM */}
+          <TabsContent value="form">
+            <CreateCivilizationForm />
+          </TabsContent>
+      </Tabs>
     </>
   )
 }

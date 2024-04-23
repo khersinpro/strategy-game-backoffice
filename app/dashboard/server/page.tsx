@@ -3,13 +3,11 @@ import { auth } from "@/src/auth/auth"
 import { ServerList } from "@/src/types/server"
 import axios from "axios"
 import { columns } from "./_components/columns"
-import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
 import AuthHeader from "@/components/layouts/auth-header";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import CreateServerForm from "./_components/create-server-form"
 
-export default async function Dashboard() {
+export default async function Server() {
   const session = await auth()
   const user = session?.user
 

@@ -5,3 +5,8 @@ export type Server = {
 }
 
 export type ServerList = Server[]
+
+export type ServerEditFormErrors = {
+    name: string;
+    general: string;
+}

@@ -6,19 +6,14 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert"
 import Link from "next/link"
 import Image from "next/image"
-import { TriangleAlert } from "lucide-react"
 import PublicHeader from "@/components/layouts/public-header"
 import { signIn } from "next-auth/react"
 import { LoginFormSchema } from "@/src/schemas/login"
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { handleZodError } from "@/src/utils/zod"
+import { ErrorAlert } from "@/components/alert/alert"
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>('')
@@ -106,27 +101,11 @@ export default function LoginForm() {
                 />
                 {errors.password && <p className="text-red-500 text-sm ml-2">{errors.password}</p>}
               </div>
-              {errors.general &&
-                <Alert variant="destructive">
-                  <TriangleAlert className="h-4 w-4" />
-                  <AlertTitle>Error</AlertTitle>
-                  <AlertDescription>
-                    {errors.general}
-                  </AlertDescription>
-                </Alert>
-              }
-              {
-                loading ? (
-                  <Button disabled>
-                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                    Please wait
-                  </Button>
-                ) : (
-                  <Button type="submit" className="w-full">
-                    Login
-                  </Button>
-                )
-              }
+              <ErrorAlert isError={!!errors.general} title="Une erreur est survenu" message={errors.general as string} />
+              <Button disabled={loading}>
+                {loading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+                Connexion
+              </Button>
             </div>
           </form>
         </div>
