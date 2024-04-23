@@ -1,6 +1,7 @@
 "use client"
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { ErrorAlert } from "@/components/alert/alert"
+import { CustomFormField } from "@/components/form/form-inputs"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -10,20 +11,17 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { ServerUpdateSchema } from "@/src/schemas/server"
 import { Server } from "@/src/types/server"
 import { handleZodError } from "@/src/utils/zod"
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import axios from "axios"
 import { useSession } from "next-auth/react"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { z } from "zod"
 
 type ServerFormErrors = {
-    name?: string;
-    general?: string;
+    name: string;
+    general: string;
 }
 
 export default function ServerEditModal({ server }: { server: Server }) {
@@ -31,11 +29,12 @@ export default function ServerEditModal({ server }: { server: Server }) {
     const token = session?.user.token ? session.user.token : ''
     const [open, setOpen] = useState<boolean>(false)
     const [name, setName] = useState<string>(server.name)
-    const [errors, setErrors] = useState<ServerFormErrors>({})
+    const [errors, setErrors] = useState<ServerFormErrors>({name: '', general: ''})
 
-    const submitUpdates = async (e: React.FormEvent<HTMLFormElement>) => {
+    const submitUpdates = useCallback( async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault()
+            setErrors({name: '', general: ''})
             ServerUpdateSchema.parse({ name })
             await axios.put(`${process.env.API_URL}/server/${server.name}`, 
             {
@@ -50,13 +49,15 @@ export default function ServerEditModal({ server }: { server: Server }) {
         }
         catch (error: any) {
             if (error instanceof z.ZodError) {
-                setErrors(handleZodError(error))
+                setErrors({...errors, ...handleZodError(error)})
             }
             else {
-                setErrors({ general: error.message ? error.message : 'Une erreur est survenue' })
+                
+                setErrors({...errors, general: error.message ? error.message : 'Une erreur est survenue' })
             }
         }
-    }
+    }, [name, token, errors, server.name])
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
@@ -67,20 +68,19 @@ export default function ServerEditModal({ server }: { server: Server }) {
                     <DialogTitle>Modification du serveur</DialogTitle>
                 </DialogHeader>
                 <form className="grid gap-4 pt-4" onSubmit={submitUpdates}>
-                    {errors.general &&
-                        <Alert variant="destructive">
-                            <ExclamationTriangleIcon className="h-4 w-4" />
-                            <AlertTitle>Erreur</AlertTitle>
-                            <AlertDescription>
-                                {errors.general}
-                            </AlertDescription>
-                        </Alert>
-                    }
-                    <div className="grid w-full max-w-sm items-center gap-1.5">
-                        <Label htmlFor="email">Nom</Label>
-                        <Input type="text" id="name" placeholder="Nom du serveur" value={name} onChange={(e) => setName(e.target.value)} />
-                        {errors.name && <p className="text-destructive text-sm ml-2">{errors.name}</p>}
-                    </div>
+                    <ErrorAlert 
+                        isError={!!errors.general} 
+                        title="Une erreur est survenue" 
+                        message={errors.general} 
+                    />
+                    <CustomFormField 
+                        type="text" 
+                        id="name" 
+                        placeholder="Nom du serveur" 
+                        value={name} 
+                        onChange={(e) => setName(e.target.value)} 
+                        error={errors.name} 
+                    />
                     <Button type="submit">Sauvegarder les modifications</Button>
                 </form>
                 <DialogFooter>
