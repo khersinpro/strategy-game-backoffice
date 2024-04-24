@@ -1,17 +1,10 @@
 import { z } from "zod";
+import { isValidStringLength } from "../utils/zod";
 
 export const UnitTypeUpdateSchema = z.object({
-    type: z.string().min(4, 'Le type doit avoir au minimum 4 caractères')
-        .refine(str => str.trim() !== '', {
-            message: 'Le nom ne doit pas être vide',
-            path: ['name']
-        }),
+    type: isValidStringLength(4, 30, 'type')
 })
 
 export const UnitTypeCreateSchema = z.object({
-    type: z.string().min(4, 'Le type doit avoir au minimum 4 caractères')
-        .refine(str => str.trim() !== '', {
-            message: 'Le type ne doit pas être vide',
-            path: ['type']
-        }),
+    type: isValidStringLength(4, 30, 'type'),
 })

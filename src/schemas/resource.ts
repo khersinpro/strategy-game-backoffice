@@ -1,17 +1,10 @@
 import { z } from "zod";
+import { isValidStringLength } from "../utils/zod";
 
 export const ResourceUpdateSchema = z.object({
-    name: z.string().min(4, 'Le nom doit avoir au minimum 4 caractères')
-        .refine(str => str.trim() !== '', {
-            message: 'Le nom ne doit pas être vide',
-            path: ['name']
-        })
+    name: isValidStringLength(4, 30, 'name')
 })
 
 export const ResourceCreateSchema = z.object({
-    name: z.string().min(4, 'Le nom doit avoir au minimum 4 caractères')
-        .refine(str => str.trim() !== '', {
-            message: 'Le nom ne doit pas être vide',
-            path: ['name']
-        }),
+    name: isValidStringLength(4, 30, 'name'),
 })
