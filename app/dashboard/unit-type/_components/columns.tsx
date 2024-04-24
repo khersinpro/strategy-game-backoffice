@@ -14,6 +14,7 @@ import {
 import { FilePenLine, MoreHorizontal, Trash, View } from "lucide-react"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { UnitType } from "@/src/types/unit-type"
+import Link from "next/link"
 
 export const columns: ColumnDef<UnitType>[] = [
     {
@@ -61,23 +62,14 @@ export const columns: ColumnDef<UnitType>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>
-                            <View className="h-4 w-4 mr-2" />
-                            Apperçu
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <FilePenLine className="h-4 w-4 mr-2" />
-                            Éditer
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <Trash className="h-4 w-4 mr-2" />
-                            Supprimer
-                        </DropdownMenuItem>
+                        <Link href={`/dashboard/unit-type/${unitType.type}`}>
+                            <DropdownMenuItem>
+                                <View className="h-4 w-4 mr-2" />
+                                Apperçu
+                            </DropdownMenuItem>
+                        </Link>
                     </DropdownMenuContent>
-                </DropdownMenu>
+                </DropdownMenu >
             )
         },
     },

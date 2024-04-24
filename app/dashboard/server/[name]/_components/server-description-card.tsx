@@ -9,7 +9,7 @@ import { ServerDeleteModal } from "./server-delete-modal";
 
 export default function ServerDescriptionCard({ server } : { server: Server }) {
     return (
-        <Card>
+        <Card className="h-fit">
             <CardHeader>
                 <CardTitle className="flex items-center">
                     <Earth className="w-4 h-4 mr-2" />

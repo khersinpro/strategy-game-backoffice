@@ -5,3 +5,8 @@ export type UnitType = {
 }
 
 export type UnitTypeList = UnitType[]
+
+export type UnitTypeEditFormErrors = {
+    type: string;
+    general: string;
+}

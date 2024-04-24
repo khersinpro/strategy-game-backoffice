@@ -8,7 +8,7 @@ import { Calendar, CalendarCheck2, KeyRound, Mail, Users } from "lucide-react";
 
 export default function UserProfileCard({ user }: { user: User }) {
     return (
-        <Card>
+        <Card className="h-fit">
             <CardHeader>
                 <CardTitle className="flex items-center">
                     <Avatar className="mr-4">

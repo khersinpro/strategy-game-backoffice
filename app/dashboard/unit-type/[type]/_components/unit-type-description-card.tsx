@@ -1,18 +1,19 @@
+
 import { RoundedBox } from "@/components/rounded-box";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Civilization } from "@/src/types/civilization";
-import { Calendar, CalendarCheck2, KeyRound, PersonStanding } from "lucide-react";
-import CivilizationEditModal from "./civilization-edit-modal";
-import { CivilizationDeleteModal } from "./civilization-delete-modal";
+import { Calendar, CalendarCheck2, Earth, KeyRound } from "lucide-react";
+import { UnitTypeDeleteModal } from "./unit-type-delete-modal";
+import { UnitType } from "@/src/types/unit-type";
+import UnitTypeEditModal from "./unit-type-edit-modal";
 
-export default function CivilizationDescriptionCard({ civilization }: { civilization: Civilization }) {
+export default function UnitTypeDescriptionCard({ unitType } : { unitType: UnitType }) {
     return (
         <Card className="h-fit">
             <CardHeader>
                 <CardTitle className="flex items-center">
-                    <PersonStanding className="w-4 h-4 mr-2" />
-                    <span>Descritpion de la civilization</span>
+                    <Earth className="w-4 h-4 mr-2" />
+                    <span>{"Descritpion du type d'unité"}</span>
                 </CardTitle>
             </CardHeader>
             <Separator />
@@ -22,7 +23,7 @@ export default function CivilizationDescriptionCard({ civilization }: { civiliza
                         <KeyRound className="h-4 w-4" />
                     </RoundedBox>
                     <p>
-                        <span className="font-semibold">Nom: </span> {civilization.name}
+                        <span className="font-semibold">Type: </span> {unitType.type}
                     </p>
                 </div>
                 <div className="flex items-center">
@@ -31,7 +32,7 @@ export default function CivilizationDescriptionCard({ civilization }: { civiliza
                     </RoundedBox>
                     <p>
                         <span className="font-semibold">Crée le: </span>
-                        {new Date(civilization.createdAt).toLocaleDateString()}
+                        {new Date(unitType.createdAt).toLocaleDateString()}
                     </p>
                 </div>
                 <div className="flex items-center">
@@ -40,14 +41,14 @@ export default function CivilizationDescriptionCard({ civilization }: { civiliza
                     </RoundedBox>
                     <p>
                         <span className="font-semibold">Mis à jour le: </span>
-                        {new Date(civilization.updatedAt).toLocaleDateString()}
+                        {new Date(unitType.updatedAt).toLocaleDateString()}
                     </p>
                 </div>
             </CardContent>
             <Separator />
             <CardFooter className="flex justify-between py-4">
-                <CivilizationEditModal civilization={civilization} />
-                <CivilizationDeleteModal civilization={civilization} />
+                <UnitTypeEditModal unitType={unitType} />
+                <UnitTypeDeleteModal unitType={unitType} />
             </CardFooter>
         </Card>
     )
