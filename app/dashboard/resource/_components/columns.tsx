@@ -14,6 +14,7 @@ import {
 import { FilePenLine, MoreHorizontal, Trash, View } from "lucide-react"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { Resource } from "@/src/types/resource"
+import Link from "next/link"
 
 export const columns: ColumnDef<Resource>[] = [
     {
@@ -49,7 +50,7 @@ export const columns: ColumnDef<Resource>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
-            const civilization = row.original
+            const resource = row.original
 
             return (
                 <DropdownMenu>
@@ -61,21 +62,12 @@ export const columns: ColumnDef<Resource>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>
-                            <View className="h-4 w-4 mr-2" />
-                            Apperçu
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <FilePenLine className="h-4 w-4 mr-2" />
-                            Éditer
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <Trash className="h-4 w-4 mr-2" />
-                            Supprimer
-                        </DropdownMenuItem>
+                        <Link href={`/dashboard/resource/${resource.name}`} >
+                            <DropdownMenuItem>
+                                <View className="h-4 w-4 mr-2" />
+                                Apperçu
+                            </DropdownMenuItem>
+                        </Link>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

@@ -1,11 +1,11 @@
+import axios from "axios"
 import { DataTable } from "@/components/data-table/data-table"
 import { auth } from "@/src/auth/auth"
 import { ResourceList } from "@/src/types/resource"
-import axios from "axios"
-import { columns } from "./columns"
-import { Button } from "@/components/ui/button"
-import { CirclePlus, Plus } from "lucide-react"
+import { columns } from "./_components/columns"
 import AuthHeader from "@/components/layouts/auth-header"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import CreateResourceForm from "./_components/create-resource-form"
 
 export default async function Dashboard() {
   const session = await auth()
@@ -19,13 +19,21 @@ export default async function Dashboard() {
 
   return (
     <>
-      <AuthHeader>
-        <Button className="w-fit">
-          Ressource
-          <Plus className="ml-2" />
-        </Button>
-      </AuthHeader>
-      <DataTable columns={columns} data={resources} filteredField={{ accessorKey: 'name', label: 'nom' }} />
+      <AuthHeader />
+      <Tabs defaultValue="overview" className="grid">
+        <TabsList className="self-center mx-auto">
+          <TabsTrigger value="overview">Afficher la liste</TabsTrigger>
+          <TabsTrigger value="form">Créer une ressource</TabsTrigger>
+        </TabsList>
+        {/* TABLE DATA */}
+        <TabsContent value="overview" className="grid gap-4">
+          <DataTable columns={columns} data={resources} filteredField={{ accessorKey: 'name', label: 'nom' }} />
+        </TabsContent>
+        {/* CREATE FORM */}
+        <TabsContent value="form">
+          <CreateResourceForm />
+        </TabsContent>
+      </Tabs>
     </>
   )
 }

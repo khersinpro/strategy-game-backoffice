@@ -2,10 +2,9 @@ import { DataTable } from "@/components/data-table/data-table"
 import { auth } from "@/src/auth/auth"
 import { MapList } from "@/src/types/map"
 import axios from "axios"
-import { columns } from "./columns"
-import { CirclePlus, Plus } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { columns } from "./_components/columns"
 import AuthHeader from "@/components/layouts/auth-header"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export default async function Dashboard() {
   const session = await auth()
@@ -18,13 +17,22 @@ export default async function Dashboard() {
 
   return (
     <>
-    <AuthHeader>
-      <Button className="w-fit">
-        Carte
-        <Plus className="ml-2" />
-      </Button>
-    </AuthHeader>
-      <DataTable columns={columns} data={maps} filteredField={{ accessorKey: 'server_name', label: 'serveur' }} />
+      <AuthHeader />
+      <Tabs defaultValue="overview" className="grid">
+        <TabsList className="self-center mx-auto">
+          <TabsTrigger value="overview">Afficher la liste</TabsTrigger>
+          <TabsTrigger value="form">Créer une carte</TabsTrigger>
+        </TabsList>
+        {/* TABLE DATA */}
+        <TabsContent value="overview" className="grid gap-4">
+          <DataTable columns={columns} data={maps} filteredField={{ accessorKey: 'server_name', label: 'serveur' }} />
+        </TabsContent>
+        {/* CREATE FORM */}
+        <TabsContent value="form">
+          <p>form</p>
+          {/* <CreateServerForm /> */}
+        </TabsContent>
+      </Tabs>
     </>
   )
 }

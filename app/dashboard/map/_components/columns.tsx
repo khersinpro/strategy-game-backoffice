@@ -14,6 +14,7 @@ import {
 import { FilePenLine, MoreHorizontal, Trash, View } from "lucide-react"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { Map } from "@/src/types/map"
+import Link from "next/link"
 
 export const columns: ColumnDef<Map>[] = [
     {
@@ -79,21 +80,12 @@ export const columns: ColumnDef<Map>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>
-                            <View className="h-4 w-4 mr-2" />
-                            Apperçu
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <FilePenLine className="h-4 w-4 mr-2" />
-                            Éditer
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <Trash className="h-4 w-4 mr-2" />
-                            Supprimer
-                        </DropdownMenuItem>
+                        <Link href={`/dashboard/map/${map.id}`} >
+                            <DropdownMenuItem>
+                                <View className="h-4 w-4 mr-2" />
+                                Apperçu
+                            </DropdownMenuItem>
+                        </Link>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
