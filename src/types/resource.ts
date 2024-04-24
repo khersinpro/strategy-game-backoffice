@@ -5,3 +5,8 @@ export type Resource = {
 }
 
 export type ResourceList = Resource[]
+
+export type ResourceEditFormErrors = {
+    name: string;
+    general: string;
+}

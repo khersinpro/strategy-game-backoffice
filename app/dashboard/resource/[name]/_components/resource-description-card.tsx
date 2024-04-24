@@ -1,19 +1,18 @@
-
 import { RoundedBox } from "@/components/rounded-box";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Server } from "@/src/types/server";
-import { Calendar, CalendarCheck2, Earth, KeyRound } from "lucide-react";
-import ServerEditModal from "./server-edit-modal";
-import { ServerDeleteModal } from "./server-delete-modal";
+import { Axe, Calendar, CalendarCheck2, KeyRound } from "lucide-react";
+import { Resource } from "@/src/types/resource";
+import ResourceDeleteModal from "./resource-delete-modal";
+import ResourceEditModal from "./resource-edit-modal";
 
-export default function ServerDescriptionCard({ server } : { server: Server }) {
+export default function ResourceDescriptionCard({ resource } : { resource: Resource }) {
     return (
         <Card className="h-fit">
             <CardHeader>
                 <CardTitle className="flex items-center">
-                    <Earth className="w-4 h-4 mr-2" />
-                    <span>Descritpion du serveur</span>
+                    <Axe className="w-4 h-4 mr-2" />
+                    <span>Descritpion de la resource</span>
                 </CardTitle>
             </CardHeader>
             <Separator />
@@ -23,7 +22,7 @@ export default function ServerDescriptionCard({ server } : { server: Server }) {
                         <KeyRound className="h-4 w-4" />
                     </RoundedBox>
                     <p>
-                        <span className="font-semibold">Nom: </span> {server.name}
+                        <span className="font-semibold">Nom: </span> {resource.name}
                     </p>
                 </div>
                 <div className="flex items-center">
@@ -32,7 +31,7 @@ export default function ServerDescriptionCard({ server } : { server: Server }) {
                     </RoundedBox>
                     <p>
                         <span className="font-semibold">Crée le: </span>
-                        {new Date(server.createdAt).toLocaleDateString()}
+                        {new Date(resource.createdAt).toLocaleDateString()}
                     </p>
                 </div>
                 <div className="flex items-center">
@@ -41,14 +40,14 @@ export default function ServerDescriptionCard({ server } : { server: Server }) {
                     </RoundedBox>
                     <p>
                         <span className="font-semibold">Mis à jour le: </span>
-                        {new Date(server.updatedAt).toLocaleDateString()}
+                        {new Date(resource.updatedAt).toLocaleDateString()}
                     </p>
                 </div>
             </CardContent>
             <Separator />
             <CardFooter className="flex justify-between py-4">
-                <ServerEditModal server={server} />
-                <ServerDeleteModal server={server} />
+                <ResourceEditModal resource={resource} />
+                <ResourceDeleteModal resource={resource} />
             </CardFooter>
         </Card>
     )

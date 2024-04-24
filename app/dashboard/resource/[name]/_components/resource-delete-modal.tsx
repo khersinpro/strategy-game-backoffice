@@ -2,33 +2,33 @@
 
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Server } from "@/src/types/server"
+import { Resource } from "@/src/types/resource"
 import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-export function ServerDeleteModal({ server }: { server: Server }) {
+export default function ResourceDeleteModal({ resource }: { resource: Resource }) {
   const { data: session } = useSession()
   const token = session?.user.token ? session.user.token : ''
   const [stateMessage, setStateMessage] = useState<string>("")
   const [open, setOpen] = useState<boolean>(false)
   const router = useRouter()
 
-  const deleteServer = async () => {
+  const deleteResource = async () => {
     try {
-      await axios.delete(`${process.env.API_URL}/server/${server.name}`, {
+      await axios.delete(`${process.env.API_URL}/resource/${resource.name}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
-      setStateMessage("Le serveur a été supprimé avec succès.")
+      setStateMessage("La ressource a été supprimée avec succès.")
       setTimeout(() => {
-        router.push('/dashboard/server')
+        router.push('/dashboard/resource')
       }, 2000)
     }
     catch (error) {
-      setStateMessage("Une erreur est survenue lors de la suppression du serveur.")
+      setStateMessage("Une erreur est survenue lors de la suppression de la ressource.")
     }
   }
 
@@ -39,15 +39,15 @@ export function ServerDeleteModal({ server }: { server: Server }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Supprimer le serveur ?</DialogTitle>
+          <DialogTitle>Supprimer la ressource ?</DialogTitle>
           <DialogDescription>
-            Cette action est irréversible et supprimera définitivement le serveur.
+            Cette action est irréversible et supprimera définitivement la ressource.
           </DialogDescription>
         </DialogHeader>
         {stateMessage && <p>{stateMessage}</p>}
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>Annuler</Button>
-          <Button variant="destructive" onClick={deleteServer}>Continuer</Button>
+          <Button variant="destructive" onClick={deleteResource}>Continuer</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
