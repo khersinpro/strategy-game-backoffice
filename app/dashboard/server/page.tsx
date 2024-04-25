@@ -7,15 +7,23 @@ import AuthHeader from "@/components/layouts/auth-header";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import CreateServerForm from "./_components/create-server-form"
 
+export async function getAllServers(token: string): Promise<ServerList> {
+    try {
+        return await axios.get(`${process.env.API_URL}/server`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(res => res.data);
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
 export default async function Server() {
   const session = await auth()
-  const user = session?.user
-
-  const servers: ServerList = await axios.get(process.env.API_URL + '/server', {
-    headers: {
-      Authorization: `Bearer ${user?.token}`
-    }
-  }).then(res => res.data)
+  const token = session?.user.token ? session.user.token : ''
+  const servers: ServerList = await getAllServers(token)
 
   return (
     <>

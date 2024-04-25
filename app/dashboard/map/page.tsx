@@ -5,6 +5,7 @@ import axios from "axios"
 import { columns } from "./_components/columns"
 import AuthHeader from "@/components/layouts/auth-header"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import CreateMapForm from "./_components/create-map-form"
 
 export default async function Dashboard() {
   const session = await auth()
@@ -29,8 +30,7 @@ export default async function Dashboard() {
         </TabsContent>
         {/* CREATE FORM */}
         <TabsContent value="form">
-          <p>form</p>
-          {/* <CreateServerForm /> */}
+          <CreateMapForm />
         </TabsContent>
       </Tabs>
     </>
