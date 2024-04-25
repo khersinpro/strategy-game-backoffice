@@ -1,32 +1,40 @@
-'use client'
+"use client"
 
-import { ErrorAlert, SuccessAlert } from "@/components/alert/alert"
+import { getAllServers } from "@/app/dashboard/server/page"
+import { ErrorAlert } from "@/components/alert/alert"
+import { FormErrorField } from "@/components/form/form-errors"
 import { CustomFormField } from "@/components/form/form-inputs"
 import { Button } from "@/components/ui/button"
-import { Card, CardTitle } from "@/components/ui/card"
-import { ServerCreateSchema } from "@/src/schemas/server"
-import { ObjectKeyValueString } from "@/src/types/common"
+import {
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { UpdateMapSchema } from "@/src/schemas/map"
+import { Map, UpdateMapFormErrors } from "@/src/types/map"
 import { ServerList } from "@/src/types/server"
 import { handleZodError } from "@/src/utils/zod"
-import { ReloadIcon } from "@radix-ui/react-icons"
 import axios from "axios"
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
-import { ZodError } from "zod"
-import { getAllServers } from "../../server/page"
-import { CreateMapSchema } from "@/src/schemas/map"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { FormErrorField } from "@/components/form/form-errors"
+import { z } from "zod"
 
-export default function CreateMapForm() {
+
+
+export default function MapEditModal({ map }: { map: Map }) {
     const { data: session } = useSession()
     const token = session?.user.token ? session.user.token : ''
-    const [serverName, setServerName] = useState<string>('')
-    const [xArea, setXArea] = useState<number>(0)
-    const [yArea, setYArea] = useState<number>(0)
-    const [loading, setLoading] = useState<boolean>(false)
-    const [errors, setErrors] = useState<ObjectKeyValueString>({})
-    const [success, setSuccess] = useState<boolean>(false)
+    const [open, setOpen] = useState<boolean>(false)
+    const [serverName, setServerName] = useState<string>(map.server_name)
+    const [xArea, setXArea] = useState<number>(map.x_area)
+    const [yArea, setYArea] = useState<number>(map.y_area)
+    const [errors, setErrors] = useState<UpdateMapFormErrors>({})
+    const router = useRouter()
     const [servers, setServers] = useState<ServerList>([])
 
     useEffect(() => {
@@ -34,24 +42,22 @@ export default function CreateMapForm() {
             const data = await getAllServers(token)
             setServers(data)
         }
-        
+
         if (token && token !== '') {
             fetchData()
         }
     }, [token])
 
-    const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+    const submitUpdates = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault()
-            setLoading(true)
-            CreateMapSchema.parse({
+            setErrors({})
+            UpdateMapSchema.parse({
                 server_name: serverName,
                 x_area: xArea,
                 y_area: yArea
             })
-            setErrors({})
-            setSuccess(false)
-            await axios.post(`${process.env.API_URL}/map`,
+            await axios.put(`${process.env.API_URL}/map/${map.id}`,
                 {
                     server_name: serverName,
                     x_area: xArea,
@@ -60,39 +66,36 @@ export default function CreateMapForm() {
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
-                    }
-                }
-            )
-
-            setSuccess(true)
-            setLoading(false)
+                    },
+                })
+            setOpen(false)
+            router.push(`/dashboard/map/${map.id}`)
         }
         catch (error: any) {
-            console.log('error', error)
-            setLoading(false)
-            if (error instanceof ZodError) {
-                setErrors(handleZodError(error))
+            if (error instanceof z.ZodError) {
+                setErrors({ ...errors, ...handleZodError(error) })
             }
             else {
-                setErrors({ general: error.message ? error.message : 'Une erreur est survenue' })
+
+                setErrors({ ...errors, general: error.message ? error.message : 'Une erreur est survenue' })
             }
         }
-    }, [token, serverName, xArea, yArea])
+    }, [token, errors, router, serverName, xArea, yArea, map.id])
 
     return (
-        <div className="flex justify-center">
-            <Card className="w-[450px] grid gap-4 p-4">
-                <CardTitle>Créer une carte</CardTitle>
-                <form onSubmit={handleSubmit} className="grid gap-4">
-                    <SuccessAlert
-                        isSuccess={success}
-                        title="Opération réussie"
-                        message="La carte a été créée avec succès."
-                    />
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button variant="outline">Modifier</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                    <DialogTitle>Modification du serveur</DialogTitle>
+                </DialogHeader>
+                <form className="grid gap-4 pt-4" onSubmit={submitUpdates}>
                     <ErrorAlert
                         isError={!!errors.general}
                         title="Une erreur est survenue"
-                        message={errors.general}
+                        message={errors.general as string}
                     />
                     <div>
                         <Select value={serverName} onValueChange={setServerName}>
@@ -113,7 +116,7 @@ export default function CreateMapForm() {
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
-                        <FormErrorField error={errors.server_name} />                
+                        <FormErrorField error={errors.server_name} />
                     </div>
                     <CustomFormField
                         type="number"
@@ -131,12 +134,11 @@ export default function CreateMapForm() {
                         onChange={(e) => setYArea(Number(e.target.value))}
                         error={errors.y_area}
                     />
-                    <Button type="submit" disabled={loading}>
-                        {loading && <ReloadIcon className="animate-spin mr-2" />}
-                        Créer
-                    </Button>
+                    <Button type="submit">Sauvegarder les modifications</Button>
                 </form>
-            </Card>
-        </div>
+                <DialogFooter>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     )
 }

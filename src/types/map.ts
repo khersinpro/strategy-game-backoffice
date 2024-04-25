@@ -20,5 +20,5 @@ export type UpdateMapFormErrors = {
     server_name?: string;
     x_area?: string;
     y_area?: string;
-    general: string;
+    general?: string;
 }
