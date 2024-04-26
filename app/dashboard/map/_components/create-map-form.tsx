@@ -1,15 +1,14 @@
 'use client'
 
+import axios from "axios"
 import { ErrorAlert, SuccessAlert } from "@/components/alert/alert"
 import { CustomFormField } from "@/components/form/form-inputs"
 import { Button } from "@/components/ui/button"
 import { Card, CardTitle } from "@/components/ui/card"
-import { ServerCreateSchema } from "@/src/schemas/server"
 import { ObjectKeyValueString } from "@/src/types/common"
 import { ServerList } from "@/src/types/server"
 import { handleZodError } from "@/src/utils/zod"
 import { ReloadIcon } from "@radix-ui/react-icons"
-import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useCallback, useEffect, useState } from "react"
 import { ZodError } from "zod"
@@ -34,7 +33,7 @@ export default function CreateMapForm() {
             const data = await getAllServers(token)
             setServers(data)
         }
-        
+
         if (token && token !== '') {
             fetchData()
         }
@@ -68,7 +67,6 @@ export default function CreateMapForm() {
             setLoading(false)
         }
         catch (error: any) {
-            console.log('error', error)
             setLoading(false)
             if (error instanceof ZodError) {
                 setErrors(handleZodError(error))

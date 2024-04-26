@@ -136,8 +136,6 @@ export default function MapEditModal({ map }: { map: Map }) {
                     />
                     <Button type="submit">Sauvegarder les modifications</Button>
                 </form>
-                <DialogFooter>
-                </DialogFooter>
             </DialogContent>
         </Dialog>
     )
