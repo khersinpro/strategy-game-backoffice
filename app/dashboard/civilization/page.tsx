@@ -7,14 +7,23 @@ import AuthHeader from "@/components/layouts/auth-header"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import CreateCivilizationForm from "./_components/create-civilization-form"
 
+export async function getAllCivilizations(token: string): Promise<CivilizationList> {
+  try {
+    return await axios.get(`${process.env.API_URL}/civilization`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(res => res.data)
+  }
+  catch (error) {
+    throw error
+  }
+}
+
 export default async function Dashboard() {
   const session = await auth()
-  const user = session?.user
-  const civilizations: CivilizationList = await axios.get(`${process.env.API_URL}/civilization`, {
-    headers: {
-      Authorization: `Bearer ${user?.token}`
-    }
-  }).then(res => res.data)
+  const token = session?.user ? session.user.token : ''
+  const civilizations = await getAllCivilizations(token)
 
   return (
     <>

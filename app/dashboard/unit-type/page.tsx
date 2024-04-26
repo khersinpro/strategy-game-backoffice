@@ -7,19 +7,25 @@ import AuthHeader from "@/components/layouts/auth-header"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import CreateUnitTypeForm from "./_components/create-unit-type-form"
 
+export async function getAllUnitTypes(token: string): Promise<UnitTypeList> {
+  try {
+    return await axios.get(`${process.env.API_URL}/unit-type`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(res => res.data)
+  }
+  catch (error) {
+    throw error
+  }
+}
+
 export default async function Dashboard() {
   const session = await auth()
-  const user = session?.user
-
-  const unitTypes: UnitTypeList = await axios.get(`${process.env.API_URL}/unit-type`, {
-    headers: {
-      Authorization: `Bearer ${user?.token}`
-    }
-  }).then(res => res.data)
+  const token = session?.user ? session.user.token : ''
+  const unitTypes = await getAllUnitTypes(token)
 
   return (
-    <>
-    <AuthHeader />
     <>
       <AuthHeader />
       <Tabs defaultValue="overview" className="grid">
@@ -36,7 +42,6 @@ export default async function Dashboard() {
             <CreateUnitTypeForm />
           </TabsContent>
       </Tabs>
-    </>
     </>
   )
 }
