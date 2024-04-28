@@ -1,23 +1,10 @@
 import AuthHeader from "@/components/layouts/auth-header";
 import { auth } from "@/src/auth/auth";
-import { User } from "@/src/types/user";
-import axios from "axios";
 import UserProfileCard from "./_components/user-profile-card";
 import UserActivityCard from "./_components/user-activity-card";
 import BackButton from "@/components/back-button";
+import { getUserById } from "@/src/service/user";
 
-export async function getUserById(token: string, id: number): Promise<User> {
-    try {
-        return await axios.get(`${process.env.API_URL}/user/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then(res => res.data)
-    }
-    catch (error) {
-        throw error;
-    }
-}
 
 export default async function UserPage({ params }: { params: { id: number } }) {
     const sessions = await auth();

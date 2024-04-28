@@ -1,13 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { auth } from "@/src/auth/auth"
-import axios from "axios"
-import { Castle, CopyIcon, UserPlus, UserRoundCheck, Users } from "lucide-react"
+import { Castle, UserPlus, UserRoundCheck, Users } from "lucide-react"
 import AuthHeader from "@/components/layouts/auth-header"
 
 async function Dashboard() {
-  const session = await auth()
-  const user = session?.user
-
   return (
     <>
       <AuthHeader />
