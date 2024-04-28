@@ -1,8 +1,5 @@
 "use client"
 
-import { ErrorAlert } from "@/components/alert/alert"
-import { CustomFormField } from "@/components/form/form-inputs"
-import { Button } from "@/components/ui/button"
 import {
     Dialog,
     DialogContent,
@@ -11,16 +8,17 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import { ErrorAlert } from "@/components/alert/alert"
+import { CustomFormField } from "@/components/form/form-inputs"
+import { Button } from "@/components/ui/button"
 import { UnitTypeUpdateSchema } from "@/src/schemas/unit-type"
+import { updateUnitType } from "@/src/service/unit-type"
 import { UnitType, UnitTypeEditFormErrors } from "@/src/types/unit-type"
 import { handleZodError } from "@/src/utils/zod"
-import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
 import { z } from "zod"
-
-
 
 export default function UnitTypeEditModal({ unitType }: { unitType: UnitType }) {
     const { data: session } = useSession()
@@ -35,15 +33,7 @@ export default function UnitTypeEditModal({ unitType }: { unitType: UnitType }) 
             e.preventDefault()
             setErrors({type: '', general: ''})
             UnitTypeUpdateSchema.parse({ type })
-            await axios.put(`${process.env.API_URL}/unit-type/${unitType.type}`, 
-            {
-                type
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-            })
+            await updateUnitType(token, unitType.type, type)
             setOpen(false)
             router.push(`/dashboard/unit-type/${type}`)
         }
@@ -52,7 +42,6 @@ export default function UnitTypeEditModal({ unitType }: { unitType: UnitType }) 
                 setErrors({...errors, ...handleZodError(error)})
             }
             else {
-                
                 setErrors({...errors, general: error.message ? error.message : 'Une erreur est survenue' })
             }
         }

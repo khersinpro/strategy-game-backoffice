@@ -2,8 +2,8 @@
 
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { deleteUnitType } from "@/src/service/unit-type"
 import { UnitType } from "@/src/types/unit-type"
-import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -15,17 +15,11 @@ export function UnitTypeDeleteModal({ unitType }: { unitType: UnitType }) {
   const [open, setOpen] = useState<boolean>(false)
   const router = useRouter()
 
-  const deleteUnitType = async () => {
+  const handleDeleteUnitType = async () => {
     try {
-      await axios.delete(`${process.env.API_URL}/unit-type/${unitType.type}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      setStateMessage("Le type d'unité a été supprimé avec succès.")
-      setTimeout(() => {
-        router.push('/dashboard/unit-type')
-      }, 2000)
+      await deleteUnitType(token, unitType.type)
+      setStateMessage("Le type d'unité a été supprimé avec succès. Redirection...")
+      setTimeout(() => { router.push('/dashboard/unit-type') }, 2000)
     }
     catch (error) {
       setStateMessage("Une erreur est survenue lors de la suppression du type d'unité.")
@@ -47,7 +41,7 @@ export function UnitTypeDeleteModal({ unitType }: { unitType: UnitType }) {
         {stateMessage && <p>{stateMessage}</p>}
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>Annuler</Button>
-          <Button variant="destructive" onClick={deleteUnitType}>Continuer</Button>
+          <Button variant="destructive" onClick={handleDeleteUnitType}>Continuer</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

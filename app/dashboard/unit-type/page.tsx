@@ -1,24 +1,10 @@
-import axios from "axios"
 import { auth } from "@/src/auth/auth"
 import { columns } from "./_components/columns"
 import { DataTable } from "../../../components/data-table/data-table"
-import { UnitTypeList } from "@/src/types/unit-type"
-import AuthHeader from "@/components/layouts/auth-header"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { getAllUnitTypes } from "@/src/service/unit-type"
+import AuthHeader from "@/components/layouts/auth-header"
 import CreateUnitTypeForm from "./_components/create-unit-type-form"
-
-export async function getAllUnitTypes(token: string): Promise<UnitTypeList> {
-  try {
-    return await axios.get(`${process.env.API_URL}/unit-type`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).then(res => res.data)
-  }
-  catch (error) {
-    throw error
-  }
-}
 
 export default async function Dashboard() {
   const session = await auth()

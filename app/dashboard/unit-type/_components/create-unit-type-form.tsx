@@ -4,12 +4,11 @@ import { ErrorAlert, SuccessAlert } from "@/components/alert/alert"
 import { CustomFormField } from "@/components/form/form-inputs"
 import { Button } from "@/components/ui/button"
 import { Card, CardTitle } from "@/components/ui/card"
-import { ServerCreateSchema } from "@/src/schemas/server"
 import { UnitTypeCreateSchema } from "@/src/schemas/unit-type"
+import { createUnitType } from "@/src/service/unit-type"
 import { ObjectKeyValueString } from "@/src/types/common"
 import { handleZodError } from "@/src/utils/zod"
 import { ReloadIcon } from "@radix-ui/react-icons"
-import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useCallback, useState } from "react"
 import { ZodError } from "zod"
@@ -26,31 +25,22 @@ export default function CreateUnitTypeForm() {
         try {
             e.preventDefault()
             setLoading(true)
-            UnitTypeCreateSchema.parse({ type })
-            setErrors({})
             setSuccess(false)
-            await axios.post(`${process.env.API_URL}/unit-type`, 
-                {
-                    type
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            )
-
+            UnitTypeCreateSchema.parse({ type })
+            await createUnitType(token, type)
             setSuccess(true)
-            setLoading(false)
+            setErrors({})
         } 
         catch (error: any) {
-            setLoading(false)
             if (error instanceof ZodError) {
                 setErrors(handleZodError(error))
             }
             else {
                 setErrors({ general: error.message ? error.message : 'Une erreur est survenue' })
             }
+        }
+        finally {
+            setLoading(false)
         }
     }, [type, token])
     
