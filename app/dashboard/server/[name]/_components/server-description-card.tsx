@@ -1,11 +1,11 @@
 
+import ServerEditModal from "./server-edit-modal";
+import ServerDeleteModal from "./server-delete-modal";
 import { RoundedBox } from "@/components/rounded-box";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Server } from "@/src/types/server";
 import { Calendar, CalendarCheck2, Earth, KeyRound } from "lucide-react";
-import ServerEditModal from "./server-edit-modal";
-import { ServerDeleteModal } from "./server-delete-modal";
 
 export default function ServerDescriptionCard({ server } : { server: Server }) {
     return (

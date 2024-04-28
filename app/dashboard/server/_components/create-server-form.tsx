@@ -5,10 +5,10 @@ import { CustomFormField } from "@/components/form/form-inputs"
 import { Button } from "@/components/ui/button"
 import { Card, CardTitle } from "@/components/ui/card"
 import { ServerCreateSchema } from "@/src/schemas/server"
+import { createServer } from "@/src/service/server"
 import { ObjectKeyValueString } from "@/src/types/common"
 import { handleZodError } from "@/src/utils/zod"
 import { ReloadIcon } from "@radix-ui/react-icons"
-import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useCallback, useState } from "react"
 import { ZodError } from "zod"
@@ -28,28 +28,19 @@ export default function CreateServerForm() {
             ServerCreateSchema.parse({ name })
             setErrors({})
             setSuccess(false)
-            await axios.post(`${process.env.API_URL}/server`, 
-                {
-                    name
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            )
-
+            await createServer(token, name)
             setSuccess(true)
-            setLoading(false)
         } 
         catch (error: any) {
-            setLoading(false)
             if (error instanceof ZodError) {
                 setErrors(handleZodError(error))
             }
             else {
                 setErrors({ general: error.message ? error.message : 'Une erreur est survenue' })
             }
+        }
+        finally {
+            setLoading(false)
         }
     }, [name, token])
     

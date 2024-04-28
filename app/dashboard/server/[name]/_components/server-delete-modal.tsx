@@ -2,30 +2,24 @@
 
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { deleteServer } from "@/src/service/server"
 import { Server } from "@/src/types/server"
-import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-export function ServerDeleteModal({ server }: { server: Server }) {
+export default function ServerDeleteModal({ server }: { server: Server }) {
   const { data: session } = useSession()
   const token = session?.user.token ? session.user.token : ''
   const [stateMessage, setStateMessage] = useState<string>("")
   const [open, setOpen] = useState<boolean>(false)
   const router = useRouter()
 
-  const deleteServer = async () => {
+  const handleDeleteServer = async () => {
     try {
-      await axios.delete(`${process.env.API_URL}/server/${server.name}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      await deleteServer(token, server.name)
       setStateMessage("Le serveur a été supprimé avec succès.")
-      setTimeout(() => {
-        router.push('/dashboard/server')
-      }, 2000)
+      setTimeout(() => { router.push('/dashboard/server') }, 2000)
     }
     catch (error) {
       setStateMessage("Une erreur est survenue lors de la suppression du serveur.")
@@ -47,7 +41,7 @@ export function ServerDeleteModal({ server }: { server: Server }) {
         {stateMessage && <p>{stateMessage}</p>}
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>Annuler</Button>
-          <Button variant="destructive" onClick={deleteServer}>Continuer</Button>
+          <Button variant="destructive" onClick={handleDeleteServer}>Continuer</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
