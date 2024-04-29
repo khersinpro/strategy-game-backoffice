@@ -105,7 +105,7 @@ export async function deleteResource(token: string, name: string): Promise<void>
  */
 export async function updateResource(token: string, name: string, newName: string): Promise<void> {
     try {
-        ResourceUpdateSchema.parse({ name })
+        ResourceUpdateSchema.parse({ name: newName })
         return await axios.put(`${process.env.API_URL}/resource/${name}`,
             {
                 name: newName

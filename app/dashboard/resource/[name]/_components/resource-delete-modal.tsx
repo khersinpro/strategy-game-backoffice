@@ -22,7 +22,7 @@ export default function ResourceDeleteModal({ resource }: { resource: Resource }
       setTimeout(() => { router.push('/dashboard/resource') }, 2000)
     }
     catch (error) {
-      setStateMessage("Une erreur est survenue lors de la suppression de la ressource.")
+      setStateMessage("Une erreur est survenue lors de la suppression de la ressource. Redirection en cours...")
     }
   }
 
