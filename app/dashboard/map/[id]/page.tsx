@@ -1,23 +1,9 @@
-import axios from "axios";
 import BackButton from "@/components/back-button";
 import AuthHeader from "@/components/layouts/auth-header";
-import { auth } from "@/src/auth/auth";
-import { Map } from "@/src/types/map";
 import MapDescriptionCard from "./_components/map-description-card";
 import MapStatsCard from "./_components/map-stats-card";
-
-export async function getMapById(token: string, id: number): Promise<Map> {
-    try {
-        return await axios.get(`${process.env.API_URL}/map/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then(res => res.data);
-    }
-    catch (error) {
-        throw error;
-    }
-}
+import { auth } from "@/src/auth/auth";
+import { getMapById } from "@/src/service/map";
 
 export default async function ServerPage({ params }: { params: { id: number } }) {
     const session = await auth();

@@ -1,30 +1,20 @@
 "use client"
 
-import { getAllServers } from "@/app/dashboard/server/page"
 import { ErrorAlert } from "@/components/alert/alert"
 import { FormErrorField } from "@/components/form/form-errors"
 import { CustomFormField } from "@/components/form/form-inputs"
 import { Button } from "@/components/ui/button"
-import {
-    Dialog,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { UpdateMapSchema } from "@/src/schemas/map"
+import { updateMap } from "@/src/service/map"
+import { getAllServers } from "@/src/service/server"
 import { Map, UpdateMapFormErrors } from "@/src/types/map"
 import { ServerList } from "@/src/types/server"
 import { handleZodError } from "@/src/utils/zod"
-import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
 import { z } from "zod"
-
-
 
 export default function MapEditModal({ map }: { map: Map }) {
     const { data: session } = useSession()
@@ -52,31 +42,19 @@ export default function MapEditModal({ map }: { map: Map }) {
         try {
             e.preventDefault()
             setErrors({})
-            UpdateMapSchema.parse({
+            await updateMap(token, map.id, {
                 server_name: serverName,
                 x_area: xArea,
                 y_area: yArea
             })
-            await axios.put(`${process.env.API_URL}/map/${map.id}`,
-                {
-                    server_name: serverName,
-                    x_area: xArea,
-                    y_area: yArea
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
-                })
             setOpen(false)
-            router.push(`/dashboard/map/${map.id}`)
+            router.refresh()
         }
         catch (error: any) {
             if (error instanceof z.ZodError) {
                 setErrors({ ...errors, ...handleZodError(error) })
             }
             else {
-
                 setErrors({ ...errors, general: error.message ? error.message : 'Une erreur est survenue' })
             }
         }
@@ -124,7 +102,7 @@ export default function MapEditModal({ map }: { map: Map }) {
                         placeholder="Largeur de la carte"
                         value={xArea}
                         onChange={(e) => setXArea(Number(e.target.value))}
-                        error={errors.x_area}
+                        error={(errors.x_area ?? "").toString()}
                     />
                     <CustomFormField
                         type="number"
@@ -132,7 +110,7 @@ export default function MapEditModal({ map }: { map: Map }) {
                         placeholder="Hauteur de la carte"
                         value={yArea}
                         onChange={(e) => setYArea(Number(e.target.value))}
-                        error={errors.y_area}
+                        error={(errors.y_area ?? "").toString()}
                     />
                     <Button type="submit">Sauvegarder les modifications</Button>
                 </form>

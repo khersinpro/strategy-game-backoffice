@@ -1,11 +1,11 @@
 
+import MapEditModal from "./map-edit-modal";
+import MapDeleteModal from "./map-delete-modal";
 import { RoundedBox } from "@/components/rounded-box";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Map } from "@/src/types/map";
 import { Axis3D, Calendar, CalendarCheck2, Earth, KeyRound } from "lucide-react";
-import MapEditModal from "./map-edit-modal";
-import { MapDeleteModal } from "./map-delete-modal";
 
 export default function MapDescriptionCard({ map } : { map: Map }) {
     return (

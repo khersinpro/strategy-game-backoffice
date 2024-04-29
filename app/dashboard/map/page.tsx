@@ -1,20 +1,15 @@
+import AuthHeader from "@/components/layouts/auth-header"
+import CreateMapForm from "./_components/create-map-form"
 import { DataTable } from "@/components/data-table/data-table"
 import { auth } from "@/src/auth/auth"
-import { MapList } from "@/src/types/map"
-import axios from "axios"
 import { columns } from "./_components/columns"
-import AuthHeader from "@/components/layouts/auth-header"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import CreateMapForm from "./_components/create-map-form"
+import { getAllMaps } from "@/src/service/map"
 
-export default async function Dashboard() {
+export default async function MapListPage() {
   const session = await auth()
-  const user = session?.user
-  const maps: MapList = await axios.get(`${process.env.API_URL}/map`, {
-    headers: {
-      Authorization: `Bearer ${user?.token}`
-    }
-  }).then(res => res.data)
+  const token = session?.user ? session.user.token : ''
+  const maps = await getAllMaps(token)
 
   return (
     <>

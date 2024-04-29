@@ -3,29 +3,23 @@
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Map } from "@/src/types/map"
-import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { deleteMap } from "@/src/service/map"
 
-export function MapDeleteModal({ map }: { map: Map }) {
+export default function MapDeleteModal({ map }: { map: Map }) {
   const { data: session } = useSession()
   const token = session?.user.token ? session.user.token : ''
   const [stateMessage, setStateMessage] = useState<string>("")
   const [open, setOpen] = useState<boolean>(false)
   const router = useRouter()
 
-  const deleteMap = async () => {
+  const handleDeleteMap = async () => {
     try {
-      await axios.delete(`${process.env.API_URL}/map/${map.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      await deleteMap(token, map.id)
       setStateMessage("La carte a été supprimée avec succès. Redirection en cours...")
-      setTimeout(() => {
-        router.push('/dashboard/map')
-      }, 2000)
+      setTimeout(() => { router.push('/dashboard/map') }, 2000)
     }
     catch (error) {
       setStateMessage("Une erreur est survenue lors de la suppression du serveur.")
@@ -47,7 +41,7 @@ export function MapDeleteModal({ map }: { map: Map }) {
         {stateMessage && <p>{stateMessage}</p>}
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>Annuler</Button>
-          <Button variant="destructive" onClick={deleteMap}>Continuer</Button>
+          <Button variant="destructive" onClick={handleDeleteMap}>Continuer</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
