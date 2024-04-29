@@ -8,10 +8,9 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { FilePenLine, MoreHorizontal, Trash, View } from "lucide-react"
+import { MoreHorizontal, View } from "lucide-react"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { Resource } from "@/src/types/resource"
 import Link from "next/link"

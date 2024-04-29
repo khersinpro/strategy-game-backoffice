@@ -2,8 +2,8 @@
 
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { deleteResource } from "@/src/service/resource"
 import { Resource } from "@/src/types/resource"
-import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -15,17 +15,11 @@ export default function ResourceDeleteModal({ resource }: { resource: Resource }
   const [open, setOpen] = useState<boolean>(false)
   const router = useRouter()
 
-  const deleteResource = async () => {
+  const handleDeleteResource = async () => {
     try {
-      await axios.delete(`${process.env.API_URL}/resource/${resource.name}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      await deleteResource(token, resource.name)
       setStateMessage("La ressource a été supprimée avec succès.")
-      setTimeout(() => {
-        router.push('/dashboard/resource')
-      }, 2000)
+      setTimeout(() => { router.push('/dashboard/resource') }, 2000)
     }
     catch (error) {
       setStateMessage("Une erreur est survenue lors de la suppression de la ressource.")
@@ -47,7 +41,7 @@ export default function ResourceDeleteModal({ resource }: { resource: Resource }
         {stateMessage && <p>{stateMessage}</p>}
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>Annuler</Button>
-          <Button variant="destructive" onClick={deleteResource}>Continuer</Button>
+          <Button variant="destructive" onClick={handleDeleteResource}>Continuer</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

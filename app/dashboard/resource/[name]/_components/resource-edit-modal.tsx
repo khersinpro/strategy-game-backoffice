@@ -1,6 +1,5 @@
 "use client"
 
-import axios from "axios"
 import { ErrorAlert } from "@/components/alert/alert"
 import { CustomFormField } from "@/components/form/form-inputs"
 import { Button } from "@/components/ui/button"
@@ -12,13 +11,13 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { ResourceUpdateSchema } from "@/src/schemas/resource"
 import { Resource, ResourceEditFormErrors } from "@/src/types/resource"
 import { handleZodError } from "@/src/utils/zod"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
 import { z } from "zod"
+import { updateResource } from "@/src/service/resource"
 
 export default function ResourceEditModal({ resource }: { resource: Resource }) {
     const { data: session } = useSession()
@@ -32,16 +31,7 @@ export default function ResourceEditModal({ resource }: { resource: Resource }) 
         try {
             e.preventDefault()
             setErrors({name: '', general: ''})
-            ResourceUpdateSchema.parse({ name })
-            await axios.put(`${process.env.API_URL}/resource/${resource.name}`, 
-            {
-                name
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-            })
+            await updateResource(token, resource.name, name)
             setOpen(false)
             router.push(`/dashboard/resource/${name}`)
         }

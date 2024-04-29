@@ -1,23 +1,9 @@
 import BackButton from "@/components/back-button";
 import AuthHeader from "@/components/layouts/auth-header";
-import { auth } from "@/src/auth/auth";
-import axios from "axios";
-import { Resource } from "@/src/types/resource";
 import ResourceDescriptionCard from "./_components/resource-description-card";
 import ResourceStatsCard from "./_components/resource-stats-card";
-
-export async function getResourceByName(token: string, name: string): Promise<Resource> {
-    try {
-        return await axios.get(`${process.env.API_URL}/resource/${name}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then(res => res.data);
-    }
-    catch (error) {
-        throw error;
-    }
-}
+import { auth } from "@/src/auth/auth";
+import { getResourceByName } from "@/src/service/resource";
 
 export default async function ResourcePage({ params }: { params: { name: string } }) {
     const session = await auth();

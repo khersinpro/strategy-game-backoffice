@@ -1,21 +1,15 @@
-import axios from "axios"
+import AuthHeader from "@/components/layouts/auth-header"
+import CreateResourceForm from "./_components/create-resource-form"
 import { DataTable } from "@/components/data-table/data-table"
 import { auth } from "@/src/auth/auth"
-import { ResourceList } from "@/src/types/resource"
 import { columns } from "./_components/columns"
-import AuthHeader from "@/components/layouts/auth-header"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import CreateResourceForm from "./_components/create-resource-form"
+import { getAllResources } from "@/src/service/resource"
 
-export default async function Dashboard() {
+export default async function ResourceListPage() {
   const session = await auth()
-  const user = session?.user
-  const resources: ResourceList = await axios.get(`${process.env.API_URL}/resource`, {
-    headers: {
-      Authorization: `Bearer ${user?.token}`
-    }
-  }).then(res => res.data)
-
+  const token = session?.user ? session.user.token : ''
+  const resources = await getAllResources(token)
 
   return (
     <>

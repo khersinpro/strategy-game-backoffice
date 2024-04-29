@@ -1,10 +1,10 @@
+import ResourceDeleteModal from "./resource-delete-modal";
+import ResourceEditModal from "./resource-edit-modal";
 import { RoundedBox } from "@/components/rounded-box";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Axe, Calendar, CalendarCheck2, KeyRound } from "lucide-react";
 import { Resource } from "@/src/types/resource";
-import ResourceDeleteModal from "./resource-delete-modal";
-import ResourceEditModal from "./resource-edit-modal";
 
 export default function ResourceDescriptionCard({ resource } : { resource: Resource }) {
     return (
