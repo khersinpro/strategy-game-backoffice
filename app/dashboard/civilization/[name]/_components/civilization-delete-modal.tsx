@@ -2,37 +2,30 @@
 
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { deleteCivilization } from "@/src/service/civilization"
 import { Civilization } from "@/src/types/civilization"
 import { DialogDescription } from "@radix-ui/react-dialog"
-import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-export function CivilizationDeleteModal({ civilization }: { civilization: Civilization }) {
+export default function CivilizationDeleteModal({ civilization }: { civilization: Civilization }) {
     const { data: session } = useSession()
     const token = session?.user.token ? session.user.token : ''
     const [stateMessage, setStateMessage] = useState<string>("")
     const [open, setOpen] = useState<boolean>(false)
     const router = useRouter()
 
-    const deleteCivilization = async () => {
+    const handleDeleteCivilization = async () => {
         try {
-            await axios.delete(`${process.env.API_URL}/civilization/${civilization.name}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            setStateMessage("La civilisation a été supprimée avec succès.")
-            setTimeout(() => {
-                router.push('/dashboard/civilization')
-            }, 2000)
+            await deleteCivilization(token, civilization.name)
+            setStateMessage("La civilisation a été supprimée avec succès. Redirection...")
+            setTimeout(() => { router.push('/dashboard/civilization') }, 2000)
         }
         catch (error) {
             setStateMessage("Une erreur est survenue lors de la suppression de la civilization.")
         }
     }
-
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
@@ -48,7 +41,7 @@ export function CivilizationDeleteModal({ civilization }: { civilization: Civili
                 {stateMessage && <p>{stateMessage}</p>}
                 <DialogFooter>
                     <Button variant="outline" onClick={() => setOpen(false)}>Annuler</Button>
-                    <Button variant="destructive" onClick={deleteCivilization}>Continuer</Button>
+                    <Button variant="destructive" onClick={handleDeleteCivilization}>Continuer</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

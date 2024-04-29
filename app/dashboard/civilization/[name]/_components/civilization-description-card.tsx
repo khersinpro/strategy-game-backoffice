@@ -1,10 +1,10 @@
+import CivilizationEditModal from "./civilization-edit-modal";
+import CivilizationDeleteModal from "./civilization-delete-modal";
 import { RoundedBox } from "@/components/rounded-box";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Civilization } from "@/src/types/civilization";
 import { Calendar, CalendarCheck2, KeyRound, PersonStanding } from "lucide-react";
-import CivilizationEditModal from "./civilization-edit-modal";
-import { CivilizationDeleteModal } from "./civilization-delete-modal";
 
 export default function CivilizationDescriptionCard({ civilization }: { civilization: Civilization }) {
     return (
