@@ -1,17 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client"
 
+import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { FilePenLine, MoreHorizontal, Trash, View } from "lucide-react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { MoreHorizontal, View } from "lucide-react"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { Unit } from "@/src/types/unit"
 
@@ -103,7 +97,7 @@ export const columns: ColumnDef<Unit>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
-            const building = row.original
+            const unit = row.original
 
             return (
                 <DropdownMenu>
@@ -115,21 +109,12 @@ export const columns: ColumnDef<Unit>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>
-                            <View className="h-4 w-4 mr-2" />
-                            Apperçu
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <FilePenLine className="h-4 w-4 mr-2" />
-                            Éditer
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <Trash className="h-4 w-4 mr-2" />
-                            Supprimer
-                        </DropdownMenuItem>
+                        <Link href={`/dashboard/unit/${unit.name}`}>
+                            <DropdownMenuItem>
+                                <View className="h-4 w-4 mr-2" />
+                                Apperçu
+                            </DropdownMenuItem>
+                        </Link>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

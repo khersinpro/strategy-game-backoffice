@@ -4,9 +4,6 @@ interface MapBase {
     y_area: number;
 }
 
-export type CreateMapData = MapBase;
-
-export type UpdateMapData = Partial<MapBase>;
 
 export interface Map extends MapBase {
     id: number;
@@ -15,6 +12,10 @@ export interface Map extends MapBase {
 }
 
 export type MapList = Map[]
+
+export type CreateMapData = MapBase;
+
+export type UpdateMapData = Partial<MapBase>;
 
 export interface CreateMapFormErrors extends Partial<MapBase> {
     general?: string;

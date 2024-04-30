@@ -1,11 +1,9 @@
 'use client'
 
-import axios from "axios"
 import { ErrorAlert, SuccessAlert } from "@/components/alert/alert"
 import { CustomFormField, CustomSelectFormField } from "@/components/form/form-inputs"
 import { Button } from "@/components/ui/button"
 import { Card, CardTitle } from "@/components/ui/card"
-import { CreateUnitShema } from "@/src/schemas/unit"
 import { CivilizationList } from "@/src/types/civilization"
 import { ObjectKeyValueString } from "@/src/types/common"
 import { UnitTypeList } from "@/src/types/unit-type"
@@ -14,22 +12,11 @@ import { ReloadIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 import { useCallback, useEffect, useState } from "react"
 import { ZodError } from "zod"
-import { getAllCivilizations } from "../../civilization/page"
-import { getAllUnitTypes } from "../../unit-type/page"
 import { MilitaryBuildingList } from "@/src/types/military-building"
-
-export async function getAllMilitaryBuildings(token: string): Promise<MilitaryBuildingList> {
-    try {
-        return await axios.get(`${process.env.API_URL}/military-building`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then(res => res.data)
-    }
-    catch (error) {
-        throw error
-    }
-}
+import { getAllCivilizations } from "@/src/service/civilization"
+import { getAllUnitTypes } from "@/src/service/unit-type"
+import { createUnit } from "@/src/service/unit"
+import { getAllMilitaryBuildings } from "@/src/service/military-building"
 
 export default function CreateUnitForm() {
     const { data: session } = useSession()
@@ -72,7 +59,9 @@ export default function CreateUnitForm() {
         try {
             e.preventDefault()
             setLoading(true)
-            CreateUnitShema.parse({ 
+            setErrors({})
+            setSuccess(false)
+            await createUnit(token, {
                 name, 
                 attack, 
                 carrying_capacity: carryingCapacity, 
@@ -81,41 +70,20 @@ export default function CreateUnitForm() {
                 training_time: trainingTime, 
                 unit_type: unitType, 
                 civilization_name: civilizationName, 
-                military_building_name: militaryBuildingName
-             })
-            setErrors({})
-            setSuccess(false)
-            await axios.post(`${process.env.API_URL}/unit`, 
-                {
-                    name, 
-                    attack, 
-                    carrying_capacity: carryingCapacity, 
-                    movement_speed: movementSpeed, 
-                    population_cost: populationCost, 
-                    training_time: trainingTime, 
-                    unit_type: unitType, 
-                    civilization_name: civilizationName, 
-                    military_building: militaryBuildingName
-
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            )
-
+                military_building: militaryBuildingName
+            })
             setSuccess(true)
-            setLoading(false)
         } 
         catch (error: any) {
-            setLoading(false)
             if (error instanceof ZodError) {
                 setErrors(handleZodError(error))
             }
             else {
                 setErrors({ general: error.message ? error.message : 'Une erreur est survenue' })
             }
+        }
+        finally {
+            setLoading(false)
         }
     }, [name, attack, carryingCapacity, movementSpeed, populationCost, trainingTime, unitType, civilizationName, militaryBuildingName, token])
     
