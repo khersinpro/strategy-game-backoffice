@@ -4,18 +4,19 @@ import { Separator } from "@/components/ui/separator";
 import { auth } from "@/src/auth/auth";
 import { getAllDefenseTypeByUnitName } from "@/src/service/defense-type";
 import { Unit } from "@/src/types/unit";
-import { BarChart4, CircleGauge, Shield } from "lucide-react";
-import DefenseTypeEditForm from "./defense-type-edit-form";
-import { RoundedBox } from "@/components/rounded-box";
-import TextCardRow from "@/components/card/text-card-row";
+import { BarChart4, Boxes, Shield } from "lucide-react";
+import { getAllUnitCostsByUnitName } from "@/src/service/unit-cost";
+import { DefenseTypeEditRows } from "./defense-type-edit-row";
+import { UnitCostEditRows } from "./unit-cost-edit-row";
 
 export default async function UnitStatsCard({ unit }: { unit: Unit }) {
     const session = await auth()
     const token = session?.user ? session.user.token : ""
     const defenseTypes = await getAllDefenseTypeByUnitName(token, unit.name)
-    const unitCosts = []
+    const unitCosts = await getAllUnitCostsByUnitName(token, unit.name)
+
     return (
-        <Card>
+        <Card className="h-fit">
             <CardHeader>
                 <CardTitle className="flex items-center">
                     <BarChart4 className="w-4 h-4 mr-2" />
@@ -24,20 +25,16 @@ export default async function UnitStatsCard({ unit }: { unit: Unit }) {
             </CardHeader>
             <Separator />
             <CardContent className="grid py-4 gap-4">
+                {/* Defense types edit rows */}
                 <Separator />
                 <h2 className="font-semibold">Défenses :</h2>
                 <Separator />
-                {
-                    defenseTypes.map((defenseType, index) => (
-                        <div key={index} className="flex items-center justify-between">
-                            <TextCardRow label={`Défense anti ${defenseType.type}`} value={defenseType.defense_value} Icon={Shield} />
-                            <DefenseTypeEditForm defenseType={defenseType} token={token} />
-                        </div>
-                    ))
-                }
+                <DefenseTypeEditRows defenseTypes={defenseTypes} token={token} />
+                {/* Unit costs edit rows */}
                 <Separator />
                 <h2 className="font-semibold">Coûts en ressources</h2>
                 <Separator />
+                <UnitCostEditRows unitCosts={unitCosts} token={token} />
             </CardContent>
         </Card>
     )
