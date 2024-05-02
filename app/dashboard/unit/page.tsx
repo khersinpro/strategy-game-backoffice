@@ -21,7 +21,7 @@ export default async function UnitListPage({ searchParams }: { searchParams: Sea
       <Tabs defaultValue="overview" className="flex flex-col">
         <TabsList className="self-center mx-auto">
           <TabsTrigger value="overview">Afficher la liste</TabsTrigger>
-          <TabsTrigger value="form">{"Créer une unité"}</TabsTrigger>
+          <TabsTrigger value="form">Créer une unité</TabsTrigger>
         </TabsList>
         {/* TABLE DATA */}
         <TabsContent value="overview" className="flex flex-col gap-4">

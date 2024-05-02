@@ -20,7 +20,7 @@ export function UnitCostEditRows({ unitCosts, token } : { unitCosts: UnitCostLis
         <>
             {
                 unitCosts.map((unitCost, index) => (
-                    <div className="flex items-center justify-between">
+                    <div key={index} className="flex items-center justify-between">
                         <TextCardRow label={unitCost.resource_name} value={unitCost.quantity} Icon={Boxes} />
                         <UnitCostEditForm unitCost={unitCost} token={token} />
                     </div>
