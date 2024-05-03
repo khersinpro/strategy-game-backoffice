@@ -8,12 +8,12 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal } from "lucide-react"
+import { MoreHorizontal, View } from "lucide-react"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { Building } from "@/src/types/building"
+import Link from "next/link"
 
 export const columns: ColumnDef<Building>[] = [
     {
@@ -80,13 +80,12 @@ export const columns: ColumnDef<Building>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(building.name)}
-                        >
-                            Copier le nom
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Éditer</DropdownMenuItem>
+                        <Link href={`/dashboard/building/${building.name}`}>
+                            <DropdownMenuItem>
+                                <View className="h-4 w-4 mr-2" />
+                                Apperçu
+                            </DropdownMenuItem>
+                        </Link>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

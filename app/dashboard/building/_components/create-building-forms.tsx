@@ -1,12 +1,12 @@
 "use client"
 
-import { CustomSelectFormField } from "@/components/form/form-inputs";
-import { Card, CardTitle } from "@/components/ui/card";
-import { useState } from "react";
 import CreateMilitaryBuildingForm from "./create-military-building-form";
 import CreateResourceBuildingForm from "./create-resource-building-form";
 import CreateStorageBuildingForm from "./create-storage-building-form";
 import CreateWallBuildingForm from "./create-wall-building-form";
+import { CustomSelectFormField } from "@/components/form/form-inputs";
+import { Card, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
 
 export default function CreateBuildingForms({ token }: { token: string }) {
     const [selectedType, setSelectedType] = useState<string>('')

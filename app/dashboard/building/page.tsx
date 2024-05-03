@@ -9,7 +9,7 @@ import { getAllPaginatedBuildings } from "@/src/service/building"
 import { Tabs, TabsContent, TabsTrigger, TabsList } from "@/components/ui/tabs"
 import CreateBuildingForms from "./_components/create-building-forms"
 
-export default async function Dashboard({ searchParams }: { searchParams: SearchParams }) {
+export default async function BuildingListPage({ searchParams }: { searchParams: SearchParams }) {
   const session = await auth()
   const token = session?.user ? session.user.token : ''
   const limit = searchParams.limit ? parseInt(searchParams.limit as string) : 20
