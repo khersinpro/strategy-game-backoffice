@@ -22,4 +22,6 @@ export type BuildingLevelWithCostList = BuildingLevelWithCost[];
 
 export interface CreateBuildingLevel extends Omit<BaseBuildingLevel, 'level'> {}
 
-export interface UpdateBuildingLevel extends Partial<CreateBuildingLevel> {}
+export interface UpdateBuildingLevel {
+    time: number;
+}
