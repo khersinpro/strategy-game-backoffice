@@ -1,18 +1,19 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { BarChart4 } from "lucide-react";
+import { ArrowBigUpDash, BarChart4 } from "lucide-react";
 
 export default function BuildingLevelsCard() {
     return (
-        <Card>
+        <Card className="flex flex-col">
         <CardHeader>
             <CardTitle className="flex items-center">
-                <BarChart4 className="w-4 h-4 mr-2" />
+                <ArrowBigUpDash className="w-4 h-4 mr-2" />
                 <span>Liste des niveaux du bâtiment</span>
             </CardTitle>
         </CardHeader>
         <Separator />
-        <CardContent className="py-4">
+        <CardContent className="flex-1 py-4">
             <ul className="grid gap-4">
                 <li>
                     <p className="font-semibold">Niveau 1</p>
@@ -25,6 +26,10 @@ export default function BuildingLevelsCard() {
                 </li>
             </ul>
         </CardContent>
+        <Separator />
+        <CardFooter className="flex justify-end items-center py-4">
+            <Button>Ajouter un niveau</Button>
+        </CardFooter>
     </Card>
     )
 }
