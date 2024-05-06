@@ -5,35 +5,34 @@ import { ErrorAlert, SuccessAlert } from "@/components/alert/alert"
 import { CustomFormField } from "@/components/form/form-inputs"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { updateUnitCost } from "@/src/service/unit-cost"
 import { ObjectKeyValueString } from "@/src/types/common"
-import { UnitCost, UnitCostList } from "@/src/types/unit-cost"
 import { handleZodError } from "@/src/utils/zod"
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { ZodError } from "zod"
-import { Boxes } from "lucide-react"
+import { Clock } from "lucide-react"
+import { BuildingLevel } from "@/src/types/building_level"
+import { getMinutesAndSeconds } from "@/src/utils/time"
+import { updateBuildingLevel } from "@/src/service/building_level"
 
-export function UnitCostEditRows({ unitCosts, token } : { unitCosts: UnitCostList, token: string }) {
+export function BuildingLevelEditRow({ buildingLevel, token } : { buildingLevel: BuildingLevel, token: string }) {
     return (
         <>
             {
-                unitCosts.map((unitCost, index) => (
-                    <div key={index} className="flex items-center justify-between">
-                        <TextCardRow label={unitCost.resource_name} value={unitCost.quantity} Icon={Boxes} />
-                        <UnitCostEditForm unitCost={unitCost} token={token} />
+                    <div className="flex items-center justify-between">
+                        <TextCardRow label={'Temps:'} value={getMinutesAndSeconds(buildingLevel.time)} Icon={Clock} />
+                        <BuildingLevelEditForm buildingLevel={buildingLevel} token={token} />
                     </div>
-                ))
             }
         </>
     );
 }
 
 
-export function UnitCostEditForm({ unitCost, token } : { unitCost: UnitCost, token: string }) {
+export function BuildingLevelEditForm({ buildingLevel, token } : { buildingLevel: BuildingLevel, token: string }) {
     const router = useRouter()
-    const [quantity, setQuantity] = useState(unitCost.quantity)
+    const [time, setTime] = useState(buildingLevel.time)
     const [errors, setErrors] = useState<ObjectKeyValueString>({})
     const [loading, setLoading] = useState<boolean>(false)
     const [success, setSuccess] = useState<boolean>(false)
@@ -44,10 +43,8 @@ export function UnitCostEditForm({ unitCost, token } : { unitCost: UnitCost, tok
             setLoading(true)
             setSuccess(false)
             setErrors({})
-            await updateUnitCost(token, unitCost.id, {
-                unit_name: unitCost.unit_name,
-                resource_name: unitCost.resource_name,
-                quantity: quantity
+            await updateBuildingLevel(token, buildingLevel.id, {
+                time: time
             })
             setSuccess(true)
             router.refresh()
@@ -71,19 +68,19 @@ export function UnitCostEditForm({ unitCost, token } : { unitCost: UnitCost, tok
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>
-                        Type de resource: {unitCost.resource_name}
+                        Temps de construction actuel: {getMinutesAndSeconds(buildingLevel.time)}
                     </DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit}>
-                    <SuccessAlert isSuccess={success} title={`Modification du coût en ${unitCost.resource_name}`} message="Modification réussi !" />
-                    <ErrorAlert isError={!!errors.general} title={`Modification du coût en ${unitCost.resource_name}`} message={errors.general} />
+                    <SuccessAlert isSuccess={success} title={`Modification du temps de construction pour le bâtiment ${buildingLevel.building_name}`} message="Modification réussi !" />
+                    <ErrorAlert isError={!!errors.general} title={`Modification du temps de construction pour le bâtiment ${buildingLevel.building_name}`} message={errors.general} />
                     <CustomFormField
-                        id="quantity"
-                        label="Coût en ressource"
+                        id="time"
+                        label="Temps de construction"
                         type="number"
-                        value={quantity}
-                        onChange={(e) => setQuantity(parseInt(e.target.value))}
-                        error={errors.quantity}
+                        value={time}
+                        onChange={(e) => setTime(parseInt(e.target.value))}
+                        error={errors.time}
                     />
                     <Button type="submit" disabled={loading} className="w-[200px] block mx-auto mt-4">
                         {loading && <ReloadIcon className="animate-spin mr-2" />}

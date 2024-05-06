@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BuildingLevelWithCostList, CreateBuildingLevel } from "../types/building_level";
+import { BuildingLevelWithCostList, CreateBuildingLevel, UpdateBuildingLevel } from "../types/building_level";
 import { createBuildingLevelSchema, updateBuildingLevelSchema } from "../schemas/building_level";
 
 /**
@@ -51,12 +51,12 @@ export async function createBuildingLevel(token: string, data: CreateBuildingLev
  *
  * @param {string} token - The authentication token for the API.
  * @param {number} buildLevelId - The ID of the building level to update.
- * @param {CreateBuildingLevel} data - The data to update the building level with.
+ * @param {UpdateBuildingLevel} data - The data to update the building level with.
  * @returns {Promise<any>} - A promise that resolves to the response data.
  * @throws {Error} - Throws an error if an error occurs while updating the building level.
  * @throws {ZodError} - Throws a ZodError if the data is invalid.
  */
-export async function updateBuildingLevel(token: string, buildLevelId: number, data: CreateBuildingLevel): Promise<any> {
+export async function updateBuildingLevel(token: string, buildLevelId: number, data: UpdateBuildingLevel): Promise<any> {
     try {
         updateBuildingLevelSchema.parse(data);
         return await axios.put(`${process.env.API_URL}/building-level/${buildLevelId}`, data, {

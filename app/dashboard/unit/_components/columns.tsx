@@ -8,6 +8,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { MoreHorizontal, View } from "lucide-react"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { Unit } from "@/src/types/unit"
+import { getMinutesAndSeconds } from "@/src/utils/time"
 
 export const columns: ColumnDef<Unit>[] = [
     {
@@ -54,9 +55,7 @@ export const columns: ColumnDef<Unit>[] = [
         },
         cell: ({ row }) => {
             const trainingTime: number = row.getValue('training_time')
-            const minutes = Math.floor(trainingTime / 60)
-            const seconds = trainingTime % 60
-            return <div>{`${minutes}m ${seconds}s`}</div>
+            return <div>{getMinutesAndSeconds(trainingTime)}</div>
         }
     },
     {

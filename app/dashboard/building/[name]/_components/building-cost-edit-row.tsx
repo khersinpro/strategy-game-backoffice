@@ -5,24 +5,24 @@ import { ErrorAlert, SuccessAlert } from "@/components/alert/alert"
 import { CustomFormField } from "@/components/form/form-inputs"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { updateUnitCost } from "@/src/service/unit-cost"
 import { ObjectKeyValueString } from "@/src/types/common"
-import { UnitCost, UnitCostList } from "@/src/types/unit-cost"
 import { handleZodError } from "@/src/utils/zod"
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { ZodError } from "zod"
 import { Boxes } from "lucide-react"
+import { BuildingCost, BuildingCostList } from "@/src/types/building_cost"
+import { updateBuildingCost } from "@/src/service/building_cost"
 
-export function UnitCostEditRows({ unitCosts, token } : { unitCosts: UnitCostList, token: string }) {
+export function BuildingCostEditRows({ buildingCosts, token }: { buildingCosts: BuildingCostList, token: string }) {
     return (
         <>
             {
-                unitCosts.map((unitCost, index) => (
+                buildingCosts.map((buildingCost, index) => (
                     <div key={index} className="flex items-center justify-between">
-                        <TextCardRow label={unitCost.resource_name} value={unitCost.quantity} Icon={Boxes} />
-                        <UnitCostEditForm unitCost={unitCost} token={token} />
+                        <TextCardRow label={buildingCost.resource_name} value={buildingCost.quantity} Icon={Boxes} />
+                        <BuildingCostEditForm buildingCost={buildingCost} token={token} />
                     </div>
                 ))
             }
@@ -30,10 +30,9 @@ export function UnitCostEditRows({ unitCosts, token } : { unitCosts: UnitCostLis
     );
 }
 
-
-export function UnitCostEditForm({ unitCost, token } : { unitCost: UnitCost, token: string }) {
+export function BuildingCostEditForm({ buildingCost, token }: { buildingCost: BuildingCost, token: string }) {
     const router = useRouter()
-    const [quantity, setQuantity] = useState(unitCost.quantity)
+    const [quantity, setQuantity] = useState(buildingCost.quantity)
     const [errors, setErrors] = useState<ObjectKeyValueString>({})
     const [loading, setLoading] = useState<boolean>(false)
     const [success, setSuccess] = useState<boolean>(false)
@@ -44,9 +43,7 @@ export function UnitCostEditForm({ unitCost, token } : { unitCost: UnitCost, tok
             setLoading(true)
             setSuccess(false)
             setErrors({})
-            await updateUnitCost(token, unitCost.id, {
-                unit_name: unitCost.unit_name,
-                resource_name: unitCost.resource_name,
+            await updateBuildingCost(token, buildingCost.id, {
                 quantity: quantity
             })
             setSuccess(true)
@@ -71,12 +68,12 @@ export function UnitCostEditForm({ unitCost, token } : { unitCost: UnitCost, tok
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>
-                        Type de resource: {unitCost.resource_name}
+                        Type de resource: {buildingCost.resource_name}
                     </DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit}>
-                    <SuccessAlert isSuccess={success} title={`Modification du coût en ${unitCost.resource_name}`} message="Modification réussi !" />
-                    <ErrorAlert isError={!!errors.general} title={`Modification du coût en ${unitCost.resource_name}`} message={errors.general} />
+                    <SuccessAlert isSuccess={success} title={`Modification du coup en ${buildingCost.resource_name}`} message="Modification réussi !" />
+                    <ErrorAlert isError={!!errors.general} title={`Modification du coût en ${buildingCost.resource_name}`} message={errors.general} />
                     <CustomFormField
                         id="quantity"
                         label="Coût en ressource"
