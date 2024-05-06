@@ -24,7 +24,7 @@ export default async function BuildingPage({ params }: { params: { name: string 
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <BuildingDescriptionCard building={building} token={token} />
-                    <BuildingLevelsCard />
+                    <BuildingLevelsCard building={building} />
                     {building.type === 'town_all_building' && ( <TownAllBuildingSpecializationCard /> )}
                     {building.type === 'military_building' && ( <MilitaryBuildingSpecializationCard /> )}
                     {building.type === 'resource_building' && ( <ResourceBuildingSpecializationCard /> )}

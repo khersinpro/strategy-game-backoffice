@@ -5,11 +5,13 @@ import { ArrowBigUpDash } from "lucide-react";
 import { auth } from "@/src/auth/auth";
 import { getBuildingLevelsAndCostByBuildingName } from "@/src/service/building_level";
 import BuildingLevelAccordion from "./building-level-accordion";
+import { Building } from "@/src/types/building";
+import BuildingLevelCreateModal from "./building-level-create-modal";
 
-export default async function BuildingLevelsCard() {
+export default async function BuildingLevelsCard({ building } : { building: Building }) {
     const session = await auth();
     const token = session?.user ? session.user.token : '';
-    const buildingLevels = await getBuildingLevelsAndCostByBuildingName(token, 'barrack');
+    const buildingLevels = await getBuildingLevelsAndCostByBuildingName(token, building.name);
 
     return (
         <Card className="flex flex-col row-span-3">
@@ -25,7 +27,7 @@ export default async function BuildingLevelsCard() {
             </CardContent>
             <Separator />
             <CardFooter className="flex justify-end items-center py-4">
-                <Button>Ajouter un niveau</Button>
+                <BuildingLevelCreateModal token={token} buildingName={building.name} />
             </CardFooter>
         </Card>
     )
