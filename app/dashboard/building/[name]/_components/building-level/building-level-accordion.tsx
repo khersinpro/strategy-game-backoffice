@@ -1,4 +1,4 @@
-import { BuildingCostEditRows } from "./building-cost-edit-row";
+import { BuildingCostEditRows } from "../building-cost-edit-row";
 import { BuildingLevelEditRow } from "./building-level-edit-row";
 import { BuildingLevelWithCostList } from "@/src/types/building_level";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"

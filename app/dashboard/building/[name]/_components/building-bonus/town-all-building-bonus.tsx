@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { BarChart4 } from "lucide-react";
 
-export default function TownAllBuildingSpecializationCard() {
+export default function TownAllBuildingBonusCard() {
     return (
         <Card>
         <CardHeader>
