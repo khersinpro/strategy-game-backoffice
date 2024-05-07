@@ -18,4 +18,4 @@ export interface StorageCapacityListWithLevel extends StorageCapacity {
     building_level: BuildingLevel;
 }
 
-export interface UpdateStorageBuilding extends Omit<BaseStorageCapacity, 'storage_building_name' | 'building_level_id'> {}
+export interface UpdateStorageCapacity extends Omit<BaseStorageCapacity, 'storage_building_name' | 'building_level_id'> {}

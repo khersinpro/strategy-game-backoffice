@@ -18,4 +18,4 @@ export interface UnitProductionListWithLevel extends UnitProduction {
     building_level: BuildingLevel;
 }
 
-export interface UpdateStorageBuilding extends Omit<BaseUnitProduction, 'military_building_name' | 'building_level_id'> {}
+export interface UpdateUnitProduction extends Omit<BaseUnitProduction, 'military_building_name' | 'building_level_id'> {}
