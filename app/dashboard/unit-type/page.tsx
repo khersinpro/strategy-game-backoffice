@@ -4,7 +4,8 @@ import { DataTable } from "../../../components/data-table/data-table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getAllUnitTypes } from "@/src/service/unit-type"
 import AuthHeader from "@/components/layouts/auth-header"
-import CreateUnitTypeForm from "./_components/create-unit-type-form"
+import dynamic from "next/dynamic"
+const CreateUnitTypeForm = dynamic(() => import("./_components/create-unit-type-form"), { ssr: false })
 
 export default async function Dashboard() {
   const session = await auth()

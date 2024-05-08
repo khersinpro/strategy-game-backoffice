@@ -1,13 +1,11 @@
 import AuthHeader from "@/components/layouts/auth-header";
+import AdvancedSearch from "./_components/advanced-search";
+import CustomPagination from "@/components/pagination/custom-pagination";
 import { columns } from "./_components/columns";
 import { DataTable } from "@/components/data-table/data-table";
-import AdvancedSearch from "./_components/advanced-search";
 import { auth } from "@/src/auth/auth";
-import CustomPagination from "@/components/pagination/custom-pagination";
 import { getAllPaginatedUsers } from "@/src/service/user";
 import { SearchParams } from "@/src/types/search-params";
-
-
 
 export default async function Dashboard({ searchParams }: { searchParams: SearchParams }) {
   const session = await auth();

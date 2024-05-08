@@ -3,11 +3,11 @@ import AuthHeader from "@/components/layouts/auth-header";
 import { auth } from "@/src/auth/auth";
 import { getBuildingByName } from "@/src/service/building";
 import BuildingDescriptionCard from "./_components/building-description-card";
-import TownAllBuildingBonusCard from "./_components/building-bonus/town-all-building-bonus/town-all-building-bonus-card";
+import TownAllBuildingBonusCard from "./_components/building-bonus/town-all-building-bonus-card";
 import MilitaryBuildingBonusCard from "./_components/building-bonus/military-building-bonus/military-building-bonus-card";
 import ResourceBuildingBonusCard from "./_components/building-bonus/resource-building-bonus/resource-building-bonus-card";
 import StorageBuildingBonusCard from "./_components/building-bonus/storage-building-bonus/storage-building-bonus-card";
-import WallBuildingBonusCard from "./_components/building-bonus/wall-building-bonus/wall-building-bonus-card";
+import WallBuildingBonusCard from "./_components/building-bonus/wall-building-bonus-card";
 import BuildingLevelsCard from "./_components/building-level/building-levels-card";
 
 export default async function BuildingPage({ params }: { params: { name: string } }) {

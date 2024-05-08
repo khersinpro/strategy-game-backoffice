@@ -16,9 +16,10 @@ import {
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 import { usePathname } from "next/navigation"
-
+import dynamic from "next/dynamic";
+const SheetContent = dynamic(() => import("@/components/ui/sheet").then((mod) => mod.SheetContent ), { ssr: false })
 
 export default function AuthHeader({ children }: { children?: React.ReactNode }) {
   const pathname = usePathname()

@@ -6,7 +6,6 @@ import {
   Home,
   LineChart,
   Users,
-  Swords,
   Earth,
   Sword,
   Castle,
@@ -15,15 +14,20 @@ import {
   Shield,
   CircleUser
 } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
 import { Separator } from "../ui/separator"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu"
+// import { DropdownMenu, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { LogoutButton } from "../auth/logout-button"
-import ThemeButton from "@/src/theme/theme-button"
-import Image from "next/image"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "../ui/dropdown-menu"
+// import dynamic from "next/dynamic"
+// const DropdownMenuContent = dynamic(() => import("@/components/ui/dropdown-menu").then((mod) => mod.DropdownMenuContent ), { ssr: false })
+// const DropdownMenuItem = dynamic(() => import("@/components/ui/dropdown-menu").then((mod) => mod.DropdownMenuItem ), { ssr: false })
+// const DropdownMenuLabel = dynamic(() => import("@/components/ui/dropdown-menu").then((mod) => mod.DropdownMenuLabel ), { ssr: false })
+// const DropdownMenuSeparator = dynamic(() => import("@/components/ui/dropdown-menu").then((mod) => mod.DropdownMenuSeparator ), { ssr: false })
+// const ThemeButton = dynamic(() => import("@/src/theme/theme-button"))
+import ThemeButton from "@/src/theme/theme-button"
 
 export default function AuthSideBar() {
   const pathname = usePathname()
@@ -77,14 +81,13 @@ export default function AuthSideBar() {
 
   return (
     <div className="hidden border-r md:block md:w-[220px] lg:w-[300px]">
-      <div className="flex h-full max-h-screen flex-col gap-2 sticky top-0">
+      <div className="flex h-full min-h-screen flex-col gap-2 sticky top-0">
 
         {/* Left top bloc with notifications */}
         <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
           <Link href="/" className="flex items-center gap-2 font-semibold">
-            {/* <Swords className="h-6 w-6" /> */}
             <Avatar className="h-10 w-10">
-              <AvatarImage src="/logo.jpeg" />
+              <AvatarImage src="/logo.jpeg" alt="avatar image" />
               <AvatarFallback></AvatarFallback>
             </Avatar>
 

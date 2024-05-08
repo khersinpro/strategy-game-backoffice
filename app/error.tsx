@@ -1,15 +1,14 @@
 'use client'
 
-import PublicHeader from "@/components/layouts/public-header"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
+import dynamic from "next/dynamic"
+const PublicHeader = dynamic(() => import("@/components/layouts/public-header"), { ssr: false })
+const Button = dynamic(() => import("@/components/ui/button").then((mod) => mod.Button), { ssr: false })
+const Card = dynamic(() => import("@/components/ui/card").then((mod) => mod.Card), { ssr: false })
+const CardContent = dynamic(() => import("@/components/ui/card").then((mod) => mod.CardContent), { ssr: false })
+const CardFooter = dynamic(() => import("@/components/ui/card").then((mod) => mod.CardFooter), { ssr: false })
+const CardHeader = dynamic(() => import("@/components/ui/card").then((mod) => mod.CardHeader), { ssr: false })
+const CardTitle = dynamic(() => import("@/components/ui/card").then((mod) => mod.CardTitle), { ssr: false })
+const ExclamationTriangleIcon = dynamic(() => import("@radix-ui/react-icons").then((mod) => mod.ExclamationTriangleIcon), { ssr: false })
 
 export default function Error({
   error,

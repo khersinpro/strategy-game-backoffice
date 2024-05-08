@@ -1,10 +1,11 @@
 import AuthHeader from "@/components/layouts/auth-header"
-import CreateCivilizationForm from "./_components/create-civilization-form"
 import { DataTable } from "@/components/data-table/data-table"
 import { auth } from "@/src/auth/auth"
 import { columns } from "./_components/columns"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { getAllCivilizations } from "@/src/service/civilization"
+import dynamic from "next/dynamic"
+const CreateCivilizationForm = dynamic(() => import("./_components/create-civilization-form"), { ssr: false })
 
 
 

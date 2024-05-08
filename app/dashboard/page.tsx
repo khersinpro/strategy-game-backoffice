@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Castle, UserPlus, UserRoundCheck, Users } from "lucide-react"
-import AuthHeader from "@/components/layouts/auth-header"
+import dynamic from "next/dynamic"
+const AuthHeader = dynamic(() => import("@/components/layouts/auth-header"))
 
 async function Dashboard() {
   return (

@@ -1,5 +1,4 @@
 import AuthHeader from "@/components/layouts/auth-header"
-import CreateUnitForm from "./_components/create-unit-form"
 import CustomPagination from "@/components/pagination/custom-pagination"
 import { DataTable } from "@/components/data-table/data-table"
 import { auth } from "@/src/auth/auth"
@@ -7,6 +6,8 @@ import { columns } from "./_components/columns"
 import { SearchParams } from "@/src/types/search-params"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getAllPaginatedUnits } from "@/src/service/unit"
+import dynamic from "next/dynamic"
+const CreateUnitForm = dynamic(() => import('./_components/create-unit-form'), { ssr: false })
 
 export default async function UnitListPage({ searchParams }: { searchParams: SearchParams }) {
   const session = await auth()

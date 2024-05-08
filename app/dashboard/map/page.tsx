@@ -1,10 +1,11 @@
 import AuthHeader from "@/components/layouts/auth-header"
-import CreateMapForm from "./_components/create-map-form"
 import { DataTable } from "@/components/data-table/data-table"
 import { auth } from "@/src/auth/auth"
 import { columns } from "./_components/columns"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getAllMaps } from "@/src/service/map"
+import dynamic from "next/dynamic"
+const CreateMapForm = dynamic(() => import("./_components/create-map-form"), { ssr: false })
 
 export default async function MapListPage() {
   const session = await auth()

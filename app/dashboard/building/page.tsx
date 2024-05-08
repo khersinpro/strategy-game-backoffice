@@ -7,7 +7,8 @@ import { columns } from "./_components/columns"
 import { SearchParams } from "@/src/types/search-params"
 import { getAllPaginatedBuildings } from "@/src/service/building"
 import { Tabs, TabsContent, TabsTrigger, TabsList } from "@/components/ui/tabs"
-import CreateBuildingForms from "./_components/create-building-forms"
+import dynamic from "next/dynamic"
+const CreateBuildingForms = dynamic(() => import("./_components/create-building-forms"), { ssr: false })
 
 export default async function BuildingListPage({ searchParams }: { searchParams: SearchParams }) {
   const session = await auth()
