@@ -35,7 +35,7 @@ export async function getAllWallDefenseByBuildingName(token: string, buildingNam
 export async function updateWallDefense (token: string, id: number, data: UpdateWallDefense): Promise<any> {
     try {
         updateWallDefenseSchema.parse(data)
-        return await axios.put(`${process.env.API_URL}/population-capacity/${id}`, data, {
+        return await axios.put(`${process.env.API_URL}/wall-defense/${id}`, data, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

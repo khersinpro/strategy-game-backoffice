@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { getAllWallDefenseByBuildingName } from "@/src/service/wall-defense";
 import { Building } from "@/src/types/building";
 import { BarChart4 } from "lucide-react";
+import { WallBuildingBonusEditRow } from "./wall-building-bonus-edit-row";
 
 export default async function WallBuildingBonusCard({ token, building } : { token: string, building: Building }) {
     const wallDefensesLevels = await getAllWallDefenseByBuildingName(token, building.name);
@@ -15,18 +16,10 @@ export default async function WallBuildingBonusCard({ token, building } : { toke
             </CardTitle>
         </CardHeader>
         <Separator />
-        <CardContent className="py-4">
-            <ul className="grid gap-4">
-                <li>
-                    <p className="font-semibold">Niveau 1: 0%</p>
-                </li>
-                <li>
-                    <p className="font-semibold">Niveau 2: 10%</p>
-                </li>
-                <li>
-                    <p className="font-semibold">Niveau 3: 20%</p>
-                </li>
-            </ul>
+        <CardContent className="grid gap-2 py-4">
+            {wallDefensesLevels.map((wallDefenseLevel, index) => (
+                <WallBuildingBonusEditRow key={index} wallDefenseLevel={wallDefenseLevel} token={token} />
+            ))}
         </CardContent>
     </Card>
     )

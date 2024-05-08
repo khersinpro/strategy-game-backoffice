@@ -10,10 +10,10 @@ const BreadCrumb = () => {
     const pathsArray: string[] = paths.split("/").filter((path) => path !== "");
 
     function formatString(string: string) {
-        const formatedString = string.replace(/-/g, " ");
+        const formatedString = string.replace(/(-|%20)/g, " ");
         return formatedString.charAt(0).toUpperCase() + formatedString.slice(1)
-      }
-    
+    }
+
     return (
         <Breadcrumb>
             <BreadcrumbList>
@@ -24,7 +24,7 @@ const BreadCrumb = () => {
                     return (
                         <Fragment key={index}>
                             <BreadcrumbItem>
-                                {isLast ? 
+                                {isLast ?
                                     <BreadcrumbPage>
                                         {title}
                                     </BreadcrumbPage>
@@ -37,7 +37,7 @@ const BreadCrumb = () => {
                                         </BreadcrumbLink>
                                     </>
                                 }
-                            </BreadcrumbItem> 
+                            </BreadcrumbItem>
                             {!isLast && <BreadcrumbSeparator />}
                         </Fragment>
                     );

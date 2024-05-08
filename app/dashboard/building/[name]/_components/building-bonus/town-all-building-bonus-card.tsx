@@ -12,7 +12,7 @@ export default async function TownAllBuildingBonusCard({ token, building } : { t
         <CardHeader>
             <CardTitle className="flex items-center">
                 <BarChart4 className="w-4 h-4 mr-2" />
-                <span>Population maximal par niveau</span>
+                <span>Population maximale par niveau</span>
             </CardTitle>
         </CardHeader>
         <Separator />

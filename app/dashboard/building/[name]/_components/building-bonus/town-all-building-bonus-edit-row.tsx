@@ -73,7 +73,7 @@ export function TownAllBuildingBonusEditForm({ populationCapacity, token } : { p
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>
-                        Capacité total de population pour le niveau actuel: &nbsp; {populationCapacity.capacity}
+                        Capacité totale de population pour le niveau actuel: &nbsp; {populationCapacity.capacity}
                     </DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit}>

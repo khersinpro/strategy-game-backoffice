@@ -20,4 +20,4 @@ export type WallDefenseList = WallDefense[];
 
 export type WallDefenseListWithLevel = WallDefenseWithLevel[];
 
-export interface UpdateWallDefense extends Omit<BaseWallDefense, 'wall_building_name' | 'defense_percent'> {}
+export interface UpdateWallDefense extends Omit<BaseWallDefense, 'wall_building_name' | 'building_level_id'> {}
