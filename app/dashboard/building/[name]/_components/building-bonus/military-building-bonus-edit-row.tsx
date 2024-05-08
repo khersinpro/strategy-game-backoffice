@@ -11,8 +11,7 @@ import { ReloadIcon } from "@radix-ui/react-icons"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { ZodError } from "zod"
-import { Clock } from "lucide-react"
-import { getMinutesAndSeconds } from "@/src/utils/time"
+import { TrendingUp } from "lucide-react"
 import { UnitProductionWithLevel } from "@/src/types/unit-production"
 import { updateUnitProduction } from "@/src/service/unit-production"
 
@@ -22,9 +21,9 @@ export function MilitaryBuildingBonusEditRow({ unitProductionLevel, token } : { 
             {
                     <div className="flex items-center justify-between">
                         <TextCardRow 
-                            label={`Niveau ${unitProductionLevel.building_level.level}`} 
+                            label={`Niveau ${unitProductionLevel.building_level.level} :`} 
                             value={`${unitProductionLevel.reduction_percent}%`} 
-                            Icon={Clock} 
+                            Icon={TrendingUp} 
                         />
                         <MilitaryBuildingBonusEditForm unitProductionLevel={unitProductionLevel} token={token} />
                     </div>

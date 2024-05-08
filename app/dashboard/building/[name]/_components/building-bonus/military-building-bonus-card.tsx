@@ -17,11 +17,9 @@ export default async function MilitaryBuildingBonusCard({ token, building }: { t
             </CardHeader>
             <Separator />
             <CardContent className="grid gap-2 py-4">
-                {
-                    unitProductionsLevels.map((unitProduction, index) =>
-                        <MilitaryBuildingBonusEditRow key={index} unitProductionLevel={unitProduction} token={token} />
-                    )
-                }
+                {unitProductionsLevels.map((unitProduction, index) => (
+                    <MilitaryBuildingBonusEditRow key={index} unitProductionLevel={unitProduction} token={token} />
+                ))}
             </CardContent>
         </Card>
     )

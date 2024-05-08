@@ -20,4 +20,4 @@ export type ResourceProductionList = ResourceProduction[];
 
 export type ResourceProductionListWithLevel = ResourceProductionWithLevel[];
 
-export interface UpdateResourceProduction extends Omit<BaseResourceProduction, 'resource_building_name' | 'production'> {}
+export interface UpdateResourceProduction extends Omit<BaseResourceProduction, 'resource_building_name' | 'building_level_id'> {}

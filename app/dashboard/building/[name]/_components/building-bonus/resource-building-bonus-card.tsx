@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { getAllResourceProductionsByBuildingName } from "@/src/service/resource-production";
 import { Building } from "@/src/types/building";
 import { BarChart4 } from "lucide-react";
+import { ResourceBuildingBonusEditRow } from "./resource-building-bonus-edit-row";
 
 export default async function ResourceBuildingBonusCard({ token, building } : { token: string, building: Building }) {
     const resourceProductionsLevels = await getAllResourceProductionsByBuildingName(token, building.name);
@@ -15,18 +16,10 @@ export default async function ResourceBuildingBonusCard({ token, building } : { 
             </CardTitle>
         </CardHeader>
         <Separator />
-        <CardContent className="py-4">
-            <ul className="grid gap-4">
-                <li>
-                    {"Nombres d'unités: 8"}
-                </li>
-                <li>
-                    Nombres de technologies: 12
-                </li>
-                <li>
-                    Nombre de bâtiments spéciaux: 3
-                </li>
-            </ul>
+        <CardContent className="grid gap-2 py-4">
+            {resourceProductionsLevels.map((resourceProductionLevel, index) => (
+                <ResourceBuildingBonusEditRow key={index} resourceProductionLevel={resourceProductionLevel} token={token} />
+            ))}
         </CardContent>
     </Card>
     )

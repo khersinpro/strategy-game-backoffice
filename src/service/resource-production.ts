@@ -1,6 +1,6 @@
 import axios from "axios"
 import { ResourceProductionListWithLevel, UpdateResourceProduction } from "../types/resource-production"
-import { UpdateResourceBuildingShema } from "../schemas/resource-building"
+import { updateResourceProductionSchema } from "../schemas/resource-production"
 
 /**
  * Fetches all resource productions and their building level by building name
@@ -34,7 +34,7 @@ export async function getAllResourceProductionsByBuildingName(token: string, bui
  */
 export async function updateResourceProduction (token: string, id: number, data: UpdateResourceProduction): Promise<any> {
     try {
-        UpdateResourceBuildingShema.parse(data)
+        updateResourceProductionSchema.parse(data)
         return await axios.put(`${process.env.API_URL}/resource-production/${id}`, data, {
             headers: {
                 Authorization: `Bearer ${token}`
