@@ -10,7 +10,7 @@ export default async function BuildingLevelsCard({ building, token } : { buildin
     const buildingLevels = await getBuildingLevelsAndCostByBuildingName(token, building.name);
 
     return (
-        <Card className="flex flex-col row-span-3">
+        <Card className="flex flex-col row-span-3 h-fit">
             <CardHeader>
                 <CardTitle className="flex items-center">
                     <ArrowBigUpDash className="w-4 h-4 mr-2" />
