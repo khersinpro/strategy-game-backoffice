@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { getAllStorageCapacityByBuildingName } from "@/src/service/storage-capacity";
 import { Building } from "@/src/types/building";
 import { BarChart4 } from "lucide-react";
+import { StorageBuildingBonusEditRow } from "./storage-building-bonus-edit-row";
 
 export default async function StorageBuildingBonusCard({ token, building } : { token: string, building: Building }) {
     const storageCapacitiesLevels = await getAllStorageCapacityByBuildingName(token, building.name);
@@ -15,18 +16,10 @@ export default async function StorageBuildingBonusCard({ token, building } : { t
             </CardTitle>
         </CardHeader>
         <Separator />
-        <CardContent className="py-4">
-            <ul className="grid gap-4">
-                <li>
-                    <p className="font-semibold">Niveau 1: 1000</p>
-                </li>
-                <li>
-                    <p className="font-semibold">Niveau 2: 2000</p>
-                </li>
-                <li>
-                    <p className="font-semibold">Niveau 3: 3000</p>
-                </li>
-            </ul>
+        <CardContent className="grid gap-2 py-4">
+            {storageCapacitiesLevels.map((storageCapacityLevel, index) => (
+                <StorageBuildingBonusEditRow key={index} storageCapacityLevel={storageCapacityLevel} token={token} />
+            ))}
         </CardContent>
     </Card>
     )
