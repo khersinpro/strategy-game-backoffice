@@ -19,4 +19,4 @@ export type PopulationCapacityList = PopulationCapacity[];
 
 export type PopulationCapacityListWithLevel = PopulationCapaticyWithLevel[];
 
-export interface UpdatePopulationCapacity extends Omit<BasePopulationCapacity, 'town_all_building_name' | 'capacity'> {}
+export interface UpdatePopulationCapacity extends Omit<BasePopulationCapacity, 'town_all_building_name' | 'building_level_id'> {}

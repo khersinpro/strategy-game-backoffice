@@ -32,7 +32,6 @@ export function StorageBuildingBonusEditRow({ storageCapacityLevel, token } : { 
     );
 }
 
-
 export function StorageBuildingBonusEditForm({ storageCapacityLevel, token } : { storageCapacityLevel: StorageCapacityWithLevel, token: string }) {
     const router = useRouter()
     const [capacity, setCapacity] = useState(storageCapacityLevel.capacity)
@@ -87,7 +86,7 @@ export function StorageBuildingBonusEditForm({ storageCapacityLevel, token } : {
                     />
                     <CustomFormField
                         id="capacity"
-                        label="Capacité de stockage"
+                        label="Capacité de population"
                         type="number"
                         value={capacity}
                         onChange={(e) => setCapacity(Number(e.target.value))}

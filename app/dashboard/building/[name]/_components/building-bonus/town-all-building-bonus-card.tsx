@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { getAllPopulationCapacitiesByBuildingName } from "@/src/service/population-capacity";
 import { Building } from "@/src/types/building";
 import { BarChart4 } from "lucide-react";
+import { TownAllBuildingBonusEditRow } from "./town-all-building-bonus-edit-row";
 
 export default async function TownAllBuildingBonusCard({ token, building } : { token: string, building: Building }) {
     const populationCapacitiesLevels = await getAllPopulationCapacitiesByBuildingName(token, building.name);
@@ -15,18 +16,10 @@ export default async function TownAllBuildingBonusCard({ token, building } : { t
             </CardTitle>
         </CardHeader>
         <Separator />
-        <CardContent className="py-4">
-            <ul className="grid gap-4">
-                <li>
-                    <p className="font-semibold">Niveau 1: 100</p>
-                </li>
-                <li>
-                    <p className="font-semibold">Niveau 2: 200</p>
-                </li>
-                <li>
-                    <p className="font-semibold">Niveau 3: 300</p>
-                </li>
-            </ul>
+        <CardContent className="grid gap-4 py-4">
+            {populationCapacitiesLevels.map((populationCapacityLevel, index) => (
+                <TownAllBuildingBonusEditRow key={index} populationCapacity={populationCapacityLevel} token={token} />
+            ))}
         </CardContent>
     </Card>
     )
