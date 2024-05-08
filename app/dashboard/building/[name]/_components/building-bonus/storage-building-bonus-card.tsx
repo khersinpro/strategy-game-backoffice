@@ -1,8 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { getAllStorageCapacityByBuildingName } from "@/src/service/storage-capacity";
+import { Building } from "@/src/types/building";
 import { BarChart4 } from "lucide-react";
 
-export default function StorageBuildingBonusCard() {
+export default async function StorageBuildingBonusCard({ token, building } : { token: string, building: Building }) {
+    const storageCapacitiesLevels = await getAllStorageCapacityByBuildingName(token, building.name);
     return (
         <Card>
         <CardHeader>

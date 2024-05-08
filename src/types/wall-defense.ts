@@ -12,10 +12,12 @@ export interface WallDefense extends BaseWallDefense {
     updatedAt: string;
 }
 
-export type WallDefenseList = WallDefense[];
-
-export interface WallDefenseListWithLevel extends WallDefense {
+export interface WallDefenseWithLevel extends WallDefense {
     building_level: BuildingLevel;
 }
+
+export type WallDefenseList = WallDefense[];
+
+export type WallDefenseListWithLevel = WallDefenseWithLevel[];
 
 export interface UpdateWallDefense extends Omit<BaseWallDefense, 'wall_building_name' | 'defense_percent'> {}

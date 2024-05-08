@@ -11,11 +11,12 @@ export interface PopulationCapacity extends BasePopulationCapacity {
     createdAt: string;
     updatedAt: string;
 }
+export interface PopulationCapaticyWithLevel extends PopulationCapacity {
+    building_level: BuildingLevel;
+}
 
 export type PopulationCapacityList = PopulationCapacity[];
 
-export interface PopulationCapacityListWithLevel extends PopulationCapacity {
-    building_level: BuildingLevel;
-}
+export type PopulationCapacityListWithLevel = PopulationCapaticyWithLevel[];
 
 export interface UpdatePopulationCapacity extends Omit<BasePopulationCapacity, 'town_all_building_name' | 'capacity'> {}

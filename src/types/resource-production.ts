@@ -12,10 +12,12 @@ export interface ResourceProduction extends BaseResourceProduction {
     updatedAt: string;
 }
 
-export type ResourceProductionList = ResourceProduction[];
-
-export interface ResourceProductionListWithLevel extends ResourceProduction {
+export interface ResourceProductionWithLevel extends ResourceProduction {
     building_level: BuildingLevel;
 }
+
+export type ResourceProductionList = ResourceProduction[];
+
+export type ResourceProductionListWithLevel = ResourceProductionWithLevel[];
 
 export interface UpdateResourceProduction extends Omit<BaseResourceProduction, 'resource_building_name' | 'production'> {}

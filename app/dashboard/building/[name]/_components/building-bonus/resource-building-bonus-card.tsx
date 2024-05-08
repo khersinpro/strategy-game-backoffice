@@ -1,9 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { getAllResourceProductionsByBuildingName } from "@/src/service/resource-production";
+import { Building } from "@/src/types/building";
 import { BarChart4 } from "lucide-react";
 
-export default function ResourceBuildingBonusCard() {
-    return (
+export default async function ResourceBuildingBonusCard({ token, building } : { token: string, building: Building }) {
+    const resourceProductionsLevels = await getAllResourceProductionsByBuildingName(token, building.name);
+        return (
         <Card>
         <CardHeader>
             <CardTitle className="flex items-center">

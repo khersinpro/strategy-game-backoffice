@@ -1,8 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { getAllWallDefenseByBuildingName } from "@/src/service/wall-defense";
+import { Building } from "@/src/types/building";
 import { BarChart4 } from "lucide-react";
 
-export default function WallBuildingBonusCard() {
+export default async function WallBuildingBonusCard({ token, building } : { token: string, building: Building }) {
+    const wallDefensesLevels = await getAllWallDefenseByBuildingName(token, building.name);
     return (
         <Card>
         <CardHeader>

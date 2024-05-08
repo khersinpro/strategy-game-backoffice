@@ -1,8 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { getAllPopulationCapacitiesByBuildingName } from "@/src/service/population-capacity";
+import { Building } from "@/src/types/building";
 import { BarChart4 } from "lucide-react";
 
-export default function TownAllBuildingBonusCard() {
+export default async function TownAllBuildingBonusCard({ token, building } : { token: string, building: Building }) {
+    const populationCapacitiesLevels = await getAllPopulationCapacitiesByBuildingName(token, building.name);
     return (
         <Card>
         <CardHeader>

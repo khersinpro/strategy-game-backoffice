@@ -3,7 +3,7 @@ import AuthHeader from "@/components/layouts/auth-header";
 import { auth } from "@/src/auth/auth";
 import { getBuildingByName } from "@/src/service/building";
 import BuildingDescriptionCard from "./_components/building-description-card";
-import TownAllBuildingBonusCard from "./_components/building-bonus/town-all-building-bonus";
+import TownAllBuildingBonusCard from "./_components/building-bonus/town-all-building-bonus-card";
 import MilitaryBuildingBonusCard from "./_components/building-bonus/military-building-bonus-card";
 import ResourceBuildingBonusCard from "./_components/building-bonus/resource-building-bonus-card";
 import StorageBuildingBonusCard from "./_components/building-bonus/storage-building-bonus-card";
@@ -24,12 +24,12 @@ export default async function BuildingPage({ params }: { params: { name: string 
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <BuildingDescriptionCard building={building} token={token} />
-                    <BuildingLevelsCard building={building} />
-                    {building.type === 'town_all_building' && ( <TownAllBuildingBonusCard /> )}
-                    {building.type === 'military_building' && ( <MilitaryBuildingBonusCard /> )}
-                    {building.type === 'resource_building' && ( <ResourceBuildingBonusCard /> )}
-                    {building.type === 'storage_building'  && ( <StorageBuildingBonusCard /> )}
-                    {building.type === 'wall_building'     && ( <WallBuildingBonusCard /> )}
+                    <BuildingLevelsCard building={building} token={token} />
+                    {building.type === 'town_all_building' && ( <TownAllBuildingBonusCard building={building} token={token} /> )}
+                    {building.type === 'military_building' && ( <MilitaryBuildingBonusCard building={building} token={token} /> )}
+                    {building.type === 'resource_building' && ( <ResourceBuildingBonusCard building={building} token={token}/> )}
+                    {building.type === 'storage_building'  && ( <StorageBuildingBonusCard building={building} token={token} /> )}
+                    {building.type === 'wall_building'     && ( <WallBuildingBonusCard building={building} token={token} /> )}
                 </div>
             </div>
         </>

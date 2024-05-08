@@ -12,10 +12,12 @@ export interface UnitProduction extends BaseUnitProduction {
     updatedAt: string;
 }
 
-export type UnitProductionList = UnitProduction[];
-
-export interface UnitProductionListWithLevel extends UnitProduction {
+export interface UnitProductionWithLevel extends UnitProduction {
     building_level: BuildingLevel;
 }
+
+export type UnitProductionList = UnitProduction[];
+
+export type UnitProductionListWithLevel = UnitProductionWithLevel[];
 
 export interface UpdateUnitProduction extends Omit<BaseUnitProduction, 'military_building_name' | 'building_level_id'> {}

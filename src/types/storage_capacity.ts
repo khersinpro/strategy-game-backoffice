@@ -12,10 +12,12 @@ export interface StorageCapacity extends BaseStorageCapacity {
     updatedAt: string;
 }
 
-export type StorageCapacityList = StorageCapacity[];
-
-export interface StorageCapacityListWithLevel extends StorageCapacity {
+export interface StorageCapacityWithLevel extends StorageCapacity {
     building_level: BuildingLevel;
 }
+
+export type StorageCapacityList = StorageCapacity[];
+
+export type StorageCapacityListWithLevel = StorageCapacityWithLevel[];
 
 export interface UpdateStorageCapacity extends Omit<BaseStorageCapacity, 'storage_building_name' | 'building_level_id'> {}

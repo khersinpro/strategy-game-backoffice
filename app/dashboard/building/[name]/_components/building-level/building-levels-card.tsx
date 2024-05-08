@@ -1,16 +1,12 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArrowBigUpDash } from "lucide-react";
-import { auth } from "@/src/auth/auth";
 import { getBuildingLevelsAndCostByBuildingName } from "@/src/service/building_level";
 import BuildingLevelAccordion from "./building-level-accordion";
 import { Building } from "@/src/types/building";
 import BuildingLevelCreateModal from "./building-level-create-modal";
 
-export default async function BuildingLevelsCard({ building } : { building: Building }) {
-    const session = await auth();
-    const token = session?.user ? session.user.token : '';
+export default async function BuildingLevelsCard({ building, token } : { building: Building, token: string}) {
     const buildingLevels = await getBuildingLevelsAndCostByBuildingName(token, building.name);
 
     return (
